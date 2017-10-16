@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+<script type="text/javascript">
+"use strict";
+class GeometricPattern {
+    constructor(centerx, centery) {
+        this.D_THETA_MAX = 20;
+        this.DEG = 360;
+        this.D_PHI = 1;
+
+        this.centerx = centerx;
+        this.centery = centery;
+        this.r = (0.8 * Math.min(this.centerx, this.centery) / 3)|0;
+        this.a = (0.8 * 2 * Math.min(this.centerx, this.centery) / 3)|0;
+        this.phi = 0;
+        this.mag = 104;
+        this.dTheta = 1;
+    }
+
+    decR() {
+        this.r -= 1;
+        if (this.r < 1) {
+            this.r = 1;
+        }
+    }
+
+    incR() {
+        if (this.r + this.a < Math.min(this.centerx, this.centery)) {
+            this.r += 1;
+        }
+    }
+
+    decA() {
+        this.a -= 1;
+        if (this.a < 1) {
+            this.a = 1;
+        }
+    }
+
+    incA() {
+        if (this.r + this.a < Math.min(this.centerx, this.centery)) {
+            this.a += 1;
+        }
+    }
+
+    decMag() {
+        this.mag -= 1;
+        if (this.mag < 0) {
+            this.mag += this.DEG;
+        }
+    }
+
+    incMag() {
+        this.mag += 1;
+        if (this.mag >= this.DEG) {
+            this.mag %= this.DEG;
+        }
+    }
+
+    decdTheta() {
+        this.dTheta -= 1;
+        if (this.dTheta < 1) {
+            this.dTheta = 1;
+        }
+    }
+
+    incdTheta() {
+        this.dTheta += 1;
+        if (this.dTheta > this.D_THETA_MAX) {
+            this.dTheta = this.D_THETA_MAX;
+        }
+    }
+
+    incPhi() {
+        this.phi += 1;
+        if (this.phi >= this.DEG) {
+            this.phi %= this.DEG;
+        }
+    }
+
+    getPoints() {
+        this.points = [];
+        for (let theta = 0; theta < this.DEG; theta += this.dTheta) {
+            this.points.push([
+            (this.centerx + this.r*Math.cos(Math.PI * theta / 180)
+            + this.a*Math.cos(Math.PI * (this.phi + theta*this.mag) / 180))|0,
+            (this.centery + this.r*Math.sin(Math.PI * theta / 180)
+            + this.a*Math.sin(Math.PI * (this.phi + theta*this.mag) / 180))|0
+            ]);
+        }
+        this.points.push(this.points[0]);
+    }
+}
+
+class Simulator {
+    constructor(width, height) {
+        this.MS = 16;
+
+        this.width = width;
+        this.height = height;
+
+        this.ctx = document.getElementById('canvas').getContext('2d');
+        this.textR = document.getElementById('r');
+        this.textA = document.getElementById('a');
+        this.textMag = document.getElementById('mag');
+        this.textdTheta = document.getElementById('dTheta');
+
+        this.centerx = (width / 2)|0;
+        this.centery = (height / 2)|0;
+
+        this.gp = new GeometricPattern(this.centerx, this.centery);
+        this.timer = NaN;
+    }
+
+    draw() {
+        // fill canvas with background color
+        this.ctx.fillStyle = 'rgb(0, 0, 0)';
+        this.ctx.fillRect(0, 0, this.width, this.height);
+
+        // draw geometric pattern
+        this.ctx.strokeStyle = 'rgb(255, 255, 255)';
+        this.ctx.lineWidth = 1;
+        this.ctx.beginPath();
+        this.ctx.moveTo(this.gp.points[0][0], this.gp.points[0][1]);
+        for (let i = 1; i < this.gp.points.length; i++){
+            this.ctx.lineTo(this.gp.points[i][0], this.gp.points[i][1]);
+        }
+        this.ctx.stroke();
+
+        // write parameters
+        this.textR.textContent = "Z < " + ("00" + this.gp.r).slice(-3) + " > A";
+        this.textA.textContent = "X < " + ("00" + this.gp.a).slice(-3) + " > S";
+        this.textMag.textContent = "C < " + ("00" + this.gp.mag).slice(-3) + " > D";
+        this.textdTheta.textContent = "V < " + ("00" + this.gp.dTheta).slice(-3) + " > F";
+        }
+
+    loop() {
+        this.gp.incPhi();
+        this.gp.getPoints();
+        this.draw();
+    }
+}
+
+function toggleKey(code, simulator) {
+    switch (code) {
+        case 90: simulator.gp.decR(); break;         // z key
+        case 65: simulator.gp.incR(); break;         // a key
+        case 88: simulator.gp.decA(); break;         // x key
+        case 83: simulator.gp.incA(); break;         // s key
+        case 67: simulator.gp.decMag(); break;       // c key
+        case 68: simulator.gp.incMag(); break;       // d key
+        case 86: simulator.gp.decdTheta(); break;    // v key
+        case 70: simulator.gp.incdTheta(); break;    // f key
+    }
+}
+
+function init() {
+    let WIDTH = 800;
+    let HEIGHT = 600;
+    let simulator = new Simulator(WIDTH, HEIGHT);
+    window.addEventListener('keydown', function (e) {
+        toggleKey(e.keyCode, simulator);
+    }, true);
+    function run() {
+        simulator.loop();
+    }
+    let timer = setInterval(run, simulator.MS);
+}
+</script>
+    </head>
+    <body onload="init()">
+        <canvas id="canvas" width="800" height="600" style="background:#000000">
+        </canvas>
+        <div id="r"></div>
+        <div id="a"></div>
+        <div id="mag"></div>
+        <div id="dTheta"></div>
+    </body>
+</html>
