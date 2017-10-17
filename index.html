@@ -4,144 +4,142 @@
         <meta charset="utf-8" />
 <script type="text/javascript">
 "use strict";
-class GeometricPattern {
-    constructor(centerx, centery) {
-        this.D_THETA_MAX = 20;
-        this.DEG = 360;
-        this.D_PHI = 1;
+let GeometricPattern = function(centerx, centery) {
+    this.D_THETA_MAX = 20;
+    this.DEG = 360;
+    this.D_PHI = 1;
 
-        this.centerx = centerx;
-        this.centery = centery;
-        this.r = (0.8 * Math.min(this.centerx, this.centery) / 3)|0;
-        this.a = (0.8 * 2 * Math.min(this.centerx, this.centery) / 3)|0;
-        this.phi = 0;
-        this.mag = 104;
+    this.centerx = centerx;
+    this.centery = centery;
+    this.r = (0.8 * Math.min(this.centerx, this.centery) / 3)|0;
+    this.a = (0.8 * 2 * Math.min(this.centerx, this.centery) / 3)|0;
+    this.phi = 0;
+    this.mag = 104;
+    this.dTheta = 1;
+}
+
+GeometricPattern.prototype.decR = function() {
+    this.r -= 1;
+    if (this.r < 1) {
+        this.r = 1;
+    }
+}
+
+GeometricPattern.prototype.incR = function() {
+    if (this.r + this.a < Math.min(this.centerx, this.centery)) {
+        this.r += 1;
+    }
+}
+
+GeometricPattern.prototype.decA = function() {
+    this.a -= 1;
+    if (this.a < 1) {
+        this.a = 1;
+    }
+}
+
+GeometricPattern.prototype.incA = function() {
+    if (this.r + this.a < Math.min(this.centerx, this.centery)) {
+        this.a += 1;
+    }
+}
+
+GeometricPattern.prototype.decMag = function() {
+    this.mag -= 1;
+    if (this.mag < 0) {
+        this.mag += this.DEG;
+    }
+}
+
+GeometricPattern.prototype.incMag = function() {
+    this.mag += 1;
+    if (this.mag >= this.DEG) {
+        this.mag %= this.DEG;
+    }
+}
+
+GeometricPattern.prototype.decdTheta = function() {
+    this.dTheta -= 1;
+    if (this.dTheta < 1) {
         this.dTheta = 1;
     }
+}
 
-    decR() {
-        this.r -= 1;
-        if (this.r < 1) {
-            this.r = 1;
-        }
-    }
-
-    incR() {
-        if (this.r + this.a < Math.min(this.centerx, this.centery)) {
-            this.r += 1;
-        }
-    }
-
-    decA() {
-        this.a -= 1;
-        if (this.a < 1) {
-            this.a = 1;
-        }
-    }
-
-    incA() {
-        if (this.r + this.a < Math.min(this.centerx, this.centery)) {
-            this.a += 1;
-        }
-    }
-
-    decMag() {
-        this.mag -= 1;
-        if (this.mag < 0) {
-            this.mag += this.DEG;
-        }
-    }
-
-    incMag() {
-        this.mag += 1;
-        if (this.mag >= this.DEG) {
-            this.mag %= this.DEG;
-        }
-    }
-
-    decdTheta() {
-        this.dTheta -= 1;
-        if (this.dTheta < 1) {
-            this.dTheta = 1;
-        }
-    }
-
-    incdTheta() {
-        this.dTheta += 1;
-        if (this.dTheta > this.D_THETA_MAX) {
-            this.dTheta = this.D_THETA_MAX;
-        }
-    }
-
-    incPhi() {
-        this.phi += 1;
-        if (this.phi >= this.DEG) {
-            this.phi %= this.DEG;
-        }
-    }
-
-    getPoints() {
-        this.points = [];
-        for (let theta = 0; theta < this.DEG; theta += this.dTheta) {
-            this.points.push([
-            (this.centerx + this.r*Math.cos(Math.PI * theta / 180)
-            + this.a*Math.cos(Math.PI * (this.phi + theta*this.mag) / 180))|0,
-            (this.centery + this.r*Math.sin(Math.PI * theta / 180)
-            + this.a*Math.sin(Math.PI * (this.phi + theta*this.mag) / 180))|0
-            ]);
-        }
-        this.points.push(this.points[0]);
+GeometricPattern.prototype.incdTheta = function() {
+    this.dTheta += 1;
+    if (this.dTheta > this.D_THETA_MAX) {
+        this.dTheta = this.D_THETA_MAX;
     }
 }
 
-class Simulator {
-    constructor(width, height) {
-        this.MS = 16;
-
-        this.width = width;
-        this.height = height;
-
-        this.ctx = document.getElementById('canvas').getContext('2d');
-        this.textR = document.getElementById('r');
-        this.textA = document.getElementById('a');
-        this.textMag = document.getElementById('mag');
-        this.textdTheta = document.getElementById('dTheta');
-
-        this.centerx = (width / 2)|0;
-        this.centery = (height / 2)|0;
-
-        this.gp = new GeometricPattern(this.centerx, this.centery);
-        this.timer = NaN;
-    }
-
-    draw() {
-        // fill canvas with background color
-        this.ctx.fillStyle = 'rgb(0, 0, 0)';
-        this.ctx.fillRect(0, 0, this.width, this.height);
-
-        // draw geometric pattern
-        this.ctx.strokeStyle = 'rgb(255, 255, 255)';
-        this.ctx.lineWidth = 1;
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.gp.points[0][0], this.gp.points[0][1]);
-        for (let i = 1; i < this.gp.points.length; i++){
-            this.ctx.lineTo(this.gp.points[i][0], this.gp.points[i][1]);
-        }
-        this.ctx.stroke();
-
-        // write parameters
-        this.textR.textContent = "Z < " + ("00" + this.gp.r).slice(-3) + " > A";
-        this.textA.textContent = "X < " + ("00" + this.gp.a).slice(-3) + " > S";
-        this.textMag.textContent = "C < " + ("00" + this.gp.mag).slice(-3) + " > D";
-        this.textdTheta.textContent = "V < " + ("00" + this.gp.dTheta).slice(-3) + " > F";
-        }
-
-    loop() {
-        this.gp.incPhi();
-        this.gp.getPoints();
-        this.draw();
+GeometricPattern.prototype.incPhi = function() {
+    this.phi += 1;
+    if (this.phi >= this.DEG) {
+        this.phi %= this.DEG;
     }
 }
+
+GeometricPattern.prototype.getPoints = function() {
+    this.points = [];
+    for (let theta = 0; theta < this.DEG; theta += this.dTheta) {
+        this.points.push([
+        (this.centerx + this.r*Math.cos(Math.PI * theta / 180)
+        + this.a*Math.cos(Math.PI * (this.phi + theta*this.mag) / 180))|0,
+        (this.centery + this.r*Math.sin(Math.PI * theta / 180)
+        + this.a*Math.sin(Math.PI * (this.phi + theta*this.mag) / 180))|0
+        ]);
+    }
+    this.points.push(this.points[0]);
+}
+
+
+let Simulator = function(width, height) {
+    this.MS = 16;
+
+    this.width = width;
+    this.height = height;
+
+    this.ctx = document.getElementById('canvas').getContext('2d');
+    this.textR = document.getElementById('r');
+    this.textA = document.getElementById('a');
+    this.textMag = document.getElementById('mag');
+    this.textdTheta = document.getElementById('dTheta');
+
+    this.centerx = (width / 2)|0;
+    this.centery = (height / 2)|0;
+
+    this.gp = new GeometricPattern(this.centerx, this.centery);
+    this.timer = NaN;
+}
+
+Simulator.prototype.draw = function() {
+    // fill canvas with background color
+    this.ctx.fillStyle = 'rgb(0, 0, 0)';
+    this.ctx.fillRect(0, 0, this.width, this.height);
+
+    // draw geometric pattern
+    this.ctx.strokeStyle = 'rgb(255, 255, 255)';
+    this.ctx.lineWidth = 1;
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.gp.points[0][0], this.gp.points[0][1]);
+    for (let i = 1; i < this.gp.points.length; i++){
+        this.ctx.lineTo(this.gp.points[i][0], this.gp.points[i][1]);
+    }
+    this.ctx.stroke();
+
+    // write parameters
+    this.textR.textContent = "Z < " + ("00" + this.gp.r).slice(-3) + " > A";
+    this.textA.textContent = "X < " + ("00" + this.gp.a).slice(-3) + " > S";
+    this.textMag.textContent = "C < " + ("00" + this.gp.mag).slice(-3) + " > D";
+    this.textdTheta.textContent = "V < " + ("00" + this.gp.dTheta).slice(-3) + " > F";
+}
+
+Simulator.prototype.loop = function() {
+    this.gp.incPhi();
+    this.gp.getPoints();
+    this.draw();
+}
+
 
 function toggleKey(code, simulator) {
     switch (code) {
