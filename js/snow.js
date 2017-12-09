@@ -73,6 +73,8 @@ Snow.Simulator = function(width, height, id) {
  * makeSnows
  * @param {number} n - 作成するSnowオブジェクトの数
  * @param {number} size - 雪のサイズ
+ * @param {number} vx - x方向の速度
+ * @param {number} vy - y方向の速度
  * @param {string} color - 雪の色（RGBで指定）
  */
 Snow.Simulator.prototype.makeSnows = function(n, size, vx, vy, color) {
@@ -163,6 +165,7 @@ Snow.run = function() {
  * init
  * @param {number} width - canvasの幅
  * @param {number} height - canvasの高さ
+ * @param {number} ratio - 拡大比率
  * @param {string} id - canvasのid
  */
 Snow.init = function(width, height, ratio, id) {

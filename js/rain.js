@@ -74,6 +74,7 @@ Rain.Rain.prototype.moveAbs = function(x, y) {
  * @param {number} width - canvasの幅
  * @param {number} height - canvasの高さ
  * @param {string} id - canvasのid
+ * @param {string} bgcolor - canvasの背景色
  */
 Rain.Simulator = function(width, height, id, bgcolor) {
   this.MS = 16;
@@ -188,6 +189,7 @@ Rain.run = function() {
  * init
  * @param {number} width - canvasの幅
  * @param {number} height - canvasの高さ
+ * @param {number} ratio - 拡大比率
  * @param {string} id - canvasのid
  */
 Rain.init = function(width, height, ratio, id) {

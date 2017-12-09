@@ -94,10 +94,11 @@ Cloud.Particle.prototype.moveAbs = function(x, y) {
 /**
  * @memberof Cloud
  * @classdesc Cloud - 雲のクラス
+ * @param {Array.<Particle>} particles - Particleの配列
  * @param {number} vx
  * @param {number} vy
- * @param {string} colorTop - Particleが描く円の上端の色
- * @param {string} colorBottom - Particleが描く円の下端の色
+ * @param {string} colorTop - Particleが描く円の上端の色（RGBで指定）
+ * @param {string} colorBottom - Particleが描く円の下端の色（RGBで指定）
  */
 Cloud.Cloud = function(particles, vx, vy, colorTop, colorBottom) {
   this.particles = particles;
@@ -115,7 +116,8 @@ Cloud.Cloud = function(particles, vx, vy, colorTop, colorBottom) {
  * @param {number} width - canvasの幅
  * @param {number} height - canvasの高さ
  * @param {string} id - canvasのid
- * @param {number} bgcolor - canvasの背景色
+ * @param {number} bgcolor - canvasの背景色（RGBで指定）
+ * @param {number} ratio - 拡大比率
  */
 Cloud.Simulator = function(width, height, id, bgcolor, ratio) {
   this.MS = 16;
@@ -131,7 +133,7 @@ Cloud.Simulator = function(width, height, id, bgcolor, ratio) {
 // -----------------------------------------------------------------------------
 /**
  * getCounters - Particle同士の重なりの数を配列で返す
- * @param {Array.<Particle>} particles
+ * @param {Array.<Particle>} particles - Particleの配列
  * @return {Array.number}
  */
 Cloud.Simulator.prototype.getCounters = function(particles) {
@@ -153,7 +155,7 @@ Cloud.Simulator.prototype.getCounters = function(particles) {
 /**
  * changeSize - Particle同士の重なりの数によってParticleのsizeを変更する
  * 多く重なっているほどsizeを大きくする
- * @param {Array.<Particle>} particles
+ * @param {Array.<Particle>} particles - Particleの配列
  */
 Cloud.Simulator.prototype.changeSize = function(particles) {
   let counters = this.getCounters(particles);
@@ -201,6 +203,7 @@ Cloud.Simulator.prototype.makeCloud = function(n, size, colorTop, colorBottom) {
 // -----------------------------------------------------------------------------
 /**
  * moveCloud - 雲の移動。Particleがcanvasの領域をはみ出したらループする
+ * @param {Cloud} cloud
  */
 Cloud.Simulator.prototype.moveCloud = function(cloud) {
   for (let particle of cloud.particles) {
