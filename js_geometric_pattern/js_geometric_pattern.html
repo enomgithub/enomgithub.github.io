@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link href="../common/css/green.css" rel="stylesheet" type="text/css" />
+    <link href="./css/js_geometric_pattern.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <div class="header">
+      <h1>
+        Geometric Pattern Animation
+      </h1>
+    </div>
+
+    <div class="contents">
+      <div class="content">
+        <div class="canvas">
+          <canvas id="geometric-pattern">
+          </canvas>
+        </div>
+
+        <div class="wrapper">
+          <div class="formula">
+            <table>
+              <thead>
+                <th>
+                  数式
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td id="x-formula">
+                    x = r cos theta + a cos (phi + c theta)
+                  </td>
+                </tr>
+                <tr>
+                  <td id="y-formula">
+                    y = r sin theta + a sin (phi + c theta)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="parameters">
+            <table>
+              <thead>
+                <th colspan="8">
+                  パラメータ
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="right">
+                    r =
+                  </td>
+                  <td id="r">
+                  </td>
+                  <td class="right">
+                    a =
+                  </td>
+                  <td id="a">
+                  </td>
+                  <td class="right">
+                    c =
+                  </td>
+                  <td id="c">
+                  </td>
+                  <td class="right">
+                    dTheta =
+                  </td>
+                  <td id="dTheta">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="usage">
+            <table>
+              <thead>
+                <th>
+                  パラメータ
+                </th>
+                <th>
+                  r
+                </th>
+                <th>
+                  a
+                </th>
+                <th>
+                  c
+                </th>
+                <th>
+                  dTheta
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="center">
+                    増加キー
+                  </td>
+                  <td class="center">
+                    a
+                  </td>
+                  <td class="center">
+                    s
+                  </td>
+                  <td class="center">
+                    d
+                  </td>
+                  <td class="center">
+                    f
+                  </td>
+                </tr>
+                <tr>
+                  <td class="center">
+                    減少キー
+                  </td>
+                  <td class="center">
+                    z
+                  </td>
+                  <td class="center">
+                    x
+                  </td>
+                  <td class="center">
+                    c
+                  </td>
+                  <td class="center">
+                    v
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="5">
+                    キーボードで減少キーか増加キーを押すと、パラメータを変更できます。
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <table>
+          <thead>
+            <th>
+                説明
+            </th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                横軸を x、縦軸を y としたとき、
+              </td>
+            </tr>
+            <tr>
+              <td class="indent">
+                x = r cos theta + a cos (phi + c theta)
+              </td>
+            </tr>
+            <tr>
+              <td class="indent">
+                y = r sin theta + a sin (phi + c theta)
+              </td>
+            </tr>
+            <tr>
+              <td class="indent">
+                (0 <= theta < 360, 0 <= phi < 360)
+              </td>
+            </tr>
+            <tr>
+              <td>
+                で表される点 (x, y) を、theta を 0 からステップ dTheta (= 1) で変化させて点のリストを作成し、
+              </td>
+            </tr>
+            <tr>
+              <td>
+                それらの点を順に線でつないで模様を描画します。
+              </td>
+            </tr>
+            <tr>
+              <td>
+                およそ 16 ms ごとに位相 phi を dPhi (= 1) のステップで増加させ、上記を繰り返します。
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="footer">
+      <h1>
+        <a href="../index.html">back &gt;</a>
+      </h1>
+    </div>
+
+    <!-- Read JavaScript files -->
+    <script src="./js/js_geometric_pattern.js"></script>
+  </body>
+</html>
