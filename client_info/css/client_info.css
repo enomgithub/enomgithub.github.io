@@ -1,40 +1,42 @@
+@import url("../../common/css/green.css");
+
 .contents {
-  margin-bottom: 48px;
-  margin-top: 48px;
+  margin-bottom: var(--height-footer-small-with-margin);
+  margin-top: var(--height-header-small-with-margin);
 }
 
 .content {
   box-sizing: border-box;
-  margin-bottom: 4px;
-  margin-top: 4px;
+  margin-bottom: var(--margin-small);
+  margin-top: var(--margin-small);
 }
 
 .label {
-  background-color: #006e54;
+  background-color: var(--color-moegiiro);
   box-sizing: border-box;
-  color: #ffffff;
+  color: var(--color-kinariiro);
   text-align: center;
-  width: 120px;
+  width: var(--width-label-large);
 }
 
 .cell {
-  padding-bottom: 4px;
-  padding-top: 4px;
+  padding-bottom: var(--padding-small);
+  padding-top: var(--padding-small);
 }
 
 @media (min-width: 600px) {
   .contents {
-    margin-bottom: 96px;
-    margin-top: 96px;
+    margin-bottom: var(--height-footer-large-with-margin);
+    margin-top: var(--height-header-large-with-margin);
   }
 
   .cell {
-    padding-bottom: 8px;
-    padding-top: 8px;
+    padding-bottom: var(--padding-medium);
+    padding-top: var(--padding-medium);
   }
 
   .label {
-    width: 200px;
+    width: var(--width-label-large);
   }
 }
 
@@ -46,8 +48,8 @@
   }
 
   .content {
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: var(--margin-small);
+    margin-right: var(--margin-small);
   }
 
   .content:after {

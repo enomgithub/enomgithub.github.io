@@ -1,12 +1,14 @@
+@import url("../../common/css/green.css");
+
 .contents {
-  margin-bottom: 48px;
-  margin-top: 48px;
+  margin-bottom: var(--height-footer-small-with-margin);
+  margin-top: var(--height-header-small-with-margin);
 }
 
 .content {
   box-sizing: border-box;
-  margin-bottom: 4px;
-  margin-top: 4px;
+  margin-bottom: var(--margin-small);
+  margin-top: var(--margin-small);
 }
 
 .icon {
@@ -16,45 +18,45 @@
 }
 
 .image {
-  height: 150px;
-  width: 150px;
+  height: var(--size-image-small);
+  width: var(--size-image-small);
 }
 
 .label {
-  background-color: #006e54;
+  background-color: var(--color-moegiiro);
   box-sizing: border-box;
-  color: #ffffff;
+  color: var(--color-kinariiro);
   text-align: center;
-  width: 120px;
+  width: var(--width-label-small);
 }
 
 .cell {
-  padding-bottom: 4px;
-  padding-top: 4px;
+  padding-bottom: var(--padding-small);
+  padding-top: var(--padding-small);
 }
 
-@media (min-width: 500px) {
+@media (min-width: 600px) {
   .contents {
-    margin-bottom: 96px;
-    margin-top: 96px;
+    margin-bottom: var(--height-footer-large-with-margin);
+    margin-top: var(--height-header-large-with-margin);
   }
 
   .image {
-    height: 250px;
-    width: 250px;
+    height: var(--size-image-large);
+    width: var(--size-image-large);
   }
 
   .label {
-    width: 180px;
+    width: var(--width-label-medium);
   }
 
   .cell {
-    padding-bottom: 8px;
-    padding-top: 8px;
+    padding-bottom: var(--padding-medium);
+    padding-top: var(--padding-medium);
   }
 }
 
-@media (min-width: 750px) {
+@media (min-width: 960px) {
   .contents:after {
     clear: both;
     content: "";
@@ -62,8 +64,8 @@
   }
 
   .content {
-    margin-left: 8px;
-    margin-right: 8px;
+    margin-left: var(--margin-small);
+    margin-right: var(--margin-small);
   }
 
   .content:after {
@@ -75,14 +77,14 @@
   .icon {
     float: left;
     margin: 0;
-    width: 250px;
+    width: var(--size-image-large);
   }
 
   .wrapper {
     box-sizing: border-box;
     float: none;
     margin-bottom: 0;
-    margin-left: 250px;
+    margin-left: var(--size-image-large);
     margin-right: 0;
     margin-top: 0;
     width: auto;

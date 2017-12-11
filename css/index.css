@@ -1,13 +1,15 @@
+@import url("../common/css/green.css");
+
 .radio {
   box-sizing: border-box;
-  margin-bottom: 36px;
-  margin-top: 8px;
+  margin-bottom: var(--margin-large);
+  margin-top: var(--margin-small);
   text-align: center;
 }
 
 .canvas {
   box-sizing: border-box;
-  margin-bottom: 8px;
+  margin-bottom: var(--margin-small);
   text-align: center;
 }
 
@@ -30,47 +32,47 @@
 
 .icon {
   box-sizing: border-box;
-  height: 32px;
-  width: 32px;
+  height: var(--size-icon-small);
+  width: var(--size-icon-small);
 }
 
 .link {
-  border: solid 1px #006e54;
+  border: solid var(--width-line-narrow) var(--color-moegiiro);
   box-sizing: border-box;
   float: none;
-  font-size: 16px;
-  height: 32px;
-  margin-bottom: 8px;
-  margin-left: 32px;
+  font-size: var(--font-size-medium);
+  height: var(--size-icon-small);
+  margin-bottom: var(--margin-small);
+  margin-left: var(--size-icon-small);
   text-align: center;
   vertical-align: middle;
   width: auto;
 }
 
 .link:hover {
-  background-color: #fabf14;
+  background-color: var(--color-ukoniro);
 }
 
 .link a {
   display: block;
-  padding: 6px;
+  padding: var(--padding-link-small);
   text-decoration: none;
 }
 
 .link a:link {
-  color: #302833;
+  color: var(--color-kurobeni);
 }
 
 .link a:visited {
-  color: #302833;
+  color: var(--color-kurobeni);
 }
 
 .link a:hover {
-  color: #302833;
+  color: var(--color-kurobeni);
 }
 
 .link a:active {
-  color: #302833;
+  color: var(--color-kurobeni);
 }
 
 @media (min-width: 600px) {
@@ -81,26 +83,26 @@
   }
 
   .icon {
-    height: 64px;
-    width: 64px;
+    height: var(--size-icon-large);
+    width: var(--size-icon-large);
   }
 
   .link {
-    font-size: 32px;
-    height: 64px;
-    margin-left: 64px;
+    font-size: var(--font-size-large);
+    height: var(--size-icon-large);
+    margin-left: var(--size-icon-large);
     width: auto;
   }
 
   .link a {
-    padding: 12px;
+    padding: var(--padding-link-large);
   }
 }
 
 @media (min-width: 960px) {
   .radio {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: var(--margin-medium);
+    margin-right: var(--margin-medium);
   }
 
   .menu:after {
@@ -111,23 +113,10 @@
 
   .content {
     float: left;
-    margin: 16px;
-  }
-
-  .icon {
-    height: 64px;
-    width: 64px;
+    margin: var(--margin-medium);
   }
 
   .link {
-    font-size: 32px;
-    height: 64px;
-    margin-bottom: 0;
-    margin-left: 64px;
-    width: 326px;
-  }
-
-  .link a {
-    padding: 12px;
+    width: var(--width-link);
   }
 }

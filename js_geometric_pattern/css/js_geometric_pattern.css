@@ -1,15 +1,17 @@
+@import url("../../common/css/green.css");
+
 .content {
   box-sizing: border-box;
-  margin-bottom: 36px;
-  margin-top: 36px;
+  margin-bottom: var(--margin-large);
+  margin-top: var(--margin-large);
 }
 
 .indent {
-  padding-left: 48px;
+  padding-left: var(--width-indent);
 }
 
 .canvas {
-  background-color: #302833;
+  background-color: var(--color-kurobeni);
   text-align: center;
 }
 
@@ -19,12 +21,12 @@
 
 .formula {
   box-sizing: border-box;
-  margin-bottom: 36px;
+  margin-bottom: var(--margin-large);
 }
 
 .parameters {
   box-sizing: border-box;
-  margin-bottom: 36px;
+  margin-bottom: var(--margin-large);
 }
 
 .usage {
@@ -33,13 +35,13 @@
 
 @media (min-width: 960px) {
   .contents {
-    margin-bottom: 96px;
-    margin-top: 96px;
+    margin-bottom: var(--height-footer-large-with-margin);
+    margin-top: var(--height-header-large-with-margin);
   }
 
   .content {
-    margin-left: 16px;
-    margin-right: 16px;
+    margin-left: var(--margin-medium);
+    margin-right: var(--margin-medium);
   }
 
   .content:after {
@@ -49,11 +51,11 @@
   }
 
   .canvas {
-    background-color: #302833;
+    background-color: var(--color-kurobeni);
     box-sizing: border-box;
     float: left;
     margin: 0;
-    width: 500px;
+    width: var(--width-canvas);
   }
 
   .wrapper {
@@ -61,7 +63,7 @@
     float: none;
     height: auto;
     margin-bottom: 0;
-    margin-left: 500px;
+    margin-left: var(--width-canvas);
     margin-right: 0;
     margin-top: 0;
     width: auto;
