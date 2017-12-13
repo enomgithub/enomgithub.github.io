@@ -33,6 +33,7 @@
 .icon {
   box-sizing: border-box;
   height: var(--size-icon-small);
+  image-rendering: pixelated;
   width: var(--size-icon-small);
 }
 
