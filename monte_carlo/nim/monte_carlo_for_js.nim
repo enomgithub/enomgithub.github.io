@@ -41,12 +41,14 @@ proc loop(canvas: Canvas, points: seq[(float, float)]) =
   else:
     count += 1
 
+
 proc resize(canvas: Canvas, maxwidth: int, points: seq[(float, float)]) =
   canvas.width = min(maxwidth, window.innerWidth)
   canvas.height = min(maxwidth, window.innerWidth)
   canvas.cls()
   for i in 0..<count:
     canvas.draw(points[i])
+
 
 proc init() =
   const
@@ -64,9 +66,8 @@ proc init() =
   canvas.height = height
   document.getElementById(PIID).innerHTML = "Pi = " & $monteCarlo(points)
   canvas.cls()
-  let timer: ref TInterval = setInterval(window,
-                                         proc() = loop(canvas, points),
-                                         MS)
+  let timer: ref TInterval =
+    window.setInterval(proc() = loop(canvas, points), MS)
   window.addEventListener("resize",
                           proc(e: Event) = resize(canvas, MAXWIDTH, points),
                           false)

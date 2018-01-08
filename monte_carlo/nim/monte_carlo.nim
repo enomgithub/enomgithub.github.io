@@ -2,10 +2,10 @@ import math
 import random
 
 
-proc isContained*(x, y: float): bool =
+proc isContained*(x, y: float, threshold = 1.0): bool =
   let distance: float = math.sqrt(1.0 + (y * y) / (x * x)) * x
   return
-    if distance <= 1.0: true
+    if distance <= threshold: true
     else: false
 
 
@@ -13,7 +13,10 @@ proc getPoints*(n: int, max: float): seq[(float, float)] =
   randomize()
   var points: seq[(float, float)]
   for i in 0..<n:
-    points.safeAdd((random.random(max=max), random.random(max=max)))
+    let
+      x: float = random.random(max=max)
+      y: float = random.random(max=max)
+    points.safeAdd((x, y))
   return points
 
 

@@ -12,15 +12,15 @@ if (typeof Uint16Array === 'undefined') Uint16Array = Array;
 if (typeof Uint32Array === 'undefined') Uint32Array = Array;
 if (typeof Float32Array === 'undefined') Float32Array = Array;
 if (typeof Float64Array === 'undefined') Float64Array = Array;
-var NTI55015 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
+var NTI55016 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
 var NTI124 = {size: 0,kind: 36,base: null,node: null,finalizer: null};
-var NTI55016 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
+var NTI55017 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
 var NTI55683 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
-var NNI55016 = {kind: 2, len: 2, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI124, name: "Field0", sons: null}, 
+var NNI55017 = {kind: 2, len: 2, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI124, name: "Field0", sons: null}, 
 {kind: 1, offset: "Field1", len: 0, typ: NTI124, name: "Field1", sons: null}]};
-NTI55016.node = NNI55016;
-NTI55683.base = NTI55016;
-NTI55015.base = NTI55016;
+NTI55017.node = NNI55017;
+NTI55683.base = NTI55017;
+NTI55016.base = NTI55017;
 
 function toJSStr(s_15003) {
 		    var len = s_15003.length-1;
@@ -294,6 +294,16 @@ function randomize_54001() {
 	
 }
 
+function random_49318(max_49320) {
+	var result_49321 = 0.0;
+
+		var x_49323 = next_48842(state_48605[0]);
+		result_49321 = ((x_49323 / 4294967295) * max_49320);
+
+	return result_49321;
+
+}
+
 function seqToPtr_55409(x_55414) {
 		return x_55414
 
@@ -322,36 +332,36 @@ function eqeq__55647(x_55651, y_55653) {
 
 }
 
-function eqeq__55041(x_55046, y_55049) {
-	var result_55050 = false;
+function eqeq__55044(x_55049, y_55052) {
+	var result_55053 = false;
 
 	BeforeRet: do {
-		if ((seqToPtr_55409(x_55046) == seqToPtr_55409(y_55049))) {
-		result_55050 = true;
+		if ((seqToPtr_55409(x_55049) == seqToPtr_55409(y_55052))) {
+		result_55053 = true;
 		break BeforeRet;
 		}
 		
-		if (((x_55046 === null) || (y_55049 === null))) {
-		result_55050 = false;
+		if (((x_55049 === null) || (y_55052 === null))) {
+		result_55053 = false;
 		break BeforeRet;
 		}
 		
-		if (!(((x_55046 != null ? x_55046.length : 0) == (y_55049 != null ? y_55049.length : 0)))) {
-		result_55050 = false;
+		if (!(((x_55049 != null ? x_55049.length : 0) == (y_55052 != null ? y_55052.length : 0)))) {
+		result_55053 = false;
 		break BeforeRet;
 		}
 		
 		L1: do {
 			var i_55645 = 0;
 			var colontmp__55665 = 0;
-			colontmp__55665 = ((x_55046 != null ? x_55046.length : 0) - 1);
+			colontmp__55665 = ((x_55049 != null ? x_55049.length : 0) - 1);
 			var res_55668 = 0;
 			L2: do {
 					L3: while (true) {
 					if (!(res_55668 <= colontmp__55665)) break L3;
 						i_55645 = res_55668;
-						if (!(eqeq__55647(x_55046[i_55645], y_55049[i_55645]))) {
-						result_55050 = false;
+						if (!(eqeq__55647(x_55049[i_55645], y_55052[i_55645]))) {
+						result_55053 = false;
 						break BeforeRet;
 						}
 						
@@ -359,11 +369,11 @@ function eqeq__55041(x_55046, y_55049) {
 					}
 			} while(false);
 		} while(false);
-		result_55050 = true;
+		result_55053 = true;
 		break BeforeRet;
 	} while (false);
 
-	return result_55050;
+	return result_55053;
 
 }
 
@@ -415,144 +425,136 @@ function nimCopyAux(dest_19822, src_19823, n_19825) {
 	
 }
 
-function safeAdd_55030(x_55036, x_55036_Idx, y_55038) {
-		if (eqeq__55041(x_55036[x_55036_Idx], null)) {
-		x_55036[x_55036_Idx] = nimCopy(null, [y_55038], NTI55683);
+function safeAdd_55033(x_55039, x_55039_Idx, y_55041) {
+		if (eqeq__55044(x_55039[x_55039_Idx], null)) {
+		x_55039[x_55039_Idx] = nimCopy(null, [y_55041], NTI55683);
 		}
 		else {
-			var Tmp1 = nimCopy(null, y_55038, NTI55016);
-		if (x_55036[x_55036_Idx] != null) { x_55036[x_55036_Idx].push(Tmp1); } else { x_55036[x_55036_Idx] = [Tmp1]; };
+			var Tmp1 = nimCopy(null, y_55041, NTI55017);
+		if (x_55039[x_55039_Idx] != null) { x_55039[x_55039_Idx].push(Tmp1); } else { x_55039[x_55039_Idx] = [Tmp1]; };
 		}
 		
 
 	
 }
 
-function random_49318(max_49320) {
-	var result_49321 = 0.0;
-
-		var x_49323 = next_48842(state_48605[0]);
-		result_49321 = ((x_49323 / 4294967295) * max_49320);
-
-	return result_49321;
-
-}
-
-function getPoints_55008(n_55010, max_55011) {
-	var result_55014 = null;
+function getPoints_55009(n_55011, max_55012) {
+	var result_55015 = null;
 
 	BeforeRet: do {
 		randomize_54001();
-		var points_55017 = [null];
+		var points_55018 = [null];
 		L1: do {
-			var i_55027 = 0;
-			var i_55699 = 0;
+			var i_55028 = 0;
+			var i_55701 = 0;
 			L2: do {
 					L3: while (true) {
-					if (!(i_55699 < n_55010)) break L3;
-						i_55027 = i_55699;
-						safeAdd_55030(points_55017, 0, {Field0: random_49318(max_55011), Field1: random_49318(max_55011)});
-						i_55699 += 1;
+					if (!(i_55701 < n_55011)) break L3;
+						i_55028 = i_55701;
+						var x_55029 = random_49318(max_55012);
+						var y_55030 = random_49318(max_55012);
+						safeAdd_55033(points_55018, 0, {Field0: x_55029, Field1: y_55030});
+						i_55701 += 1;
 					}
 			} while(false);
 		} while(false);
-		result_55014 = nimCopy(null, points_55017[0], NTI55015);
+		result_55015 = nimCopy(null, points_55018[0], NTI55016);
 		break BeforeRet;
 	} while (false);
 
-	return result_55014;
+	return result_55015;
 
 }
 
-function isContained_55001(x_55003, y_55004) {
+function isContained_55001(x_55003, y_55004, threshold_55005) {
 		var Tmp1;
 
-	var result_55005 = false;
+	var result_55006 = false;
 
 	BeforeRet: do {
-		var distance_55006 = (Math.sqrt((1.0000000000000000e+000 + ((y_55004 * y_55004) / (x_55003 * x_55003)))) * x_55003);
-		if ((distance_55006 <= 1.0000000000000000e+000)) {
+		var distance_55007 = (Math.sqrt((1.0000000000000000e+000 + ((y_55004 * y_55004) / (x_55003 * x_55003)))) * x_55003);
+		if ((distance_55007 <= threshold_55005)) {
 		Tmp1 = true;
 		}
 		else {
 		Tmp1 = false;
 		}
 		
-		result_55005 = Tmp1;
+		result_55006 = Tmp1;
 		break BeforeRet;
 	} while (false);
 
-	return result_55005;
+	return result_55006;
 
 }
 
-function monteCarlo_55701(n_55703) {
-	var result_55704 = 0.0;
+function monteCarlo_55703(n_55705) {
+	var result_55706 = 0.0;
 
 	BeforeRet: do {
-		var points_55707 = getPoints_55008(n_55703, 1.0000000000000000e+000);
-		var count_55708 = 0;
+		var points_55709 = getPoints_55009(n_55705, 1.0000000000000000e+000);
+		var count_55710 = 0;
 		L1: do {
-			var i_55718 = 0;
-			var i_55733 = 0;
+			var i_55720 = 0;
+			var i_55735 = 0;
 			L2: do {
 					L3: while (true) {
-					if (!(i_55733 < n_55703)) break L3;
-						i_55718 = i_55733;
-						if (isContained_55001(points_55707[i_55718]["Field0"], points_55707[i_55718]["Field1"])) {
-						count_55708 += 1;
+					if (!(i_55735 < n_55705)) break L3;
+						i_55720 = i_55735;
+						if (isContained_55001(points_55709[i_55720]["Field0"], points_55709[i_55720]["Field1"], 1.0000000000000000e+000)) {
+						count_55710 += 1;
 						}
 						
-						i_55733 += 1;
+						i_55735 += 1;
 					}
 			} while(false);
 		} while(false);
-		result_55704 = ((4.0000000000000000e+000 * count_55708) / n_55703);
+		result_55706 = ((4.0000000000000000e+000 * count_55710) / n_55705);
 		break BeforeRet;
 	} while (false);
 
-	return result_55704;
+	return result_55706;
 
 }
 
-function main_55782() {
-		rawEcho(makeNimstrLit("Pi = "), cstrToNimstr((monteCarlo_55701(1000000))+""));
+function main_55784() {
+		rawEcho(makeNimstrLit("Pi = "), cstrToNimstr((monteCarlo_55703(1000000))+""));
 
 	
 }
 if (false) {
-main_55782();
+main_55784();
 }
 
 var count_56001 = [0];
 
-function monteCarlo_55735(points_55739) {
-	var result_55740 = 0.0;
+function monteCarlo_55737(points_55741) {
+	var result_55742 = 0.0;
 
 	BeforeRet: do {
-		var count_55741 = 0;
+		var count_55743 = 0;
 		L1: do {
-			var i_55758 = 0;
-			var colontmp__55777 = 0;
-			colontmp__55777 = (points_55739 != null ? points_55739.length : 0);
-			var i_55780 = 0;
+			var i_55760 = 0;
+			var colontmp__55779 = 0;
+			colontmp__55779 = (points_55741 != null ? points_55741.length : 0);
+			var i_55782 = 0;
 			L2: do {
 					L3: while (true) {
-					if (!(i_55780 < colontmp__55777)) break L3;
-						i_55758 = i_55780;
-						if (isContained_55001(points_55739[i_55758]["Field0"], points_55739[i_55758]["Field1"])) {
-						count_55741 += 1;
+					if (!(i_55782 < colontmp__55779)) break L3;
+						i_55760 = i_55782;
+						if (isContained_55001(points_55741[i_55760]["Field0"], points_55741[i_55760]["Field1"], 1.0000000000000000e+000)) {
+						count_55743 += 1;
 						}
 						
-						i_55780 += 1;
+						i_55782 += 1;
 					}
 			} while(false);
 		} while(false);
-		result_55740 = ((4.0000000000000000e+000 * count_55741) / (points_55739 != null ? points_55739.length : 0));
+		result_55742 = ((4.0000000000000000e+000 * count_55743) / (points_55741 != null ? points_55741.length : 0));
 		break BeforeRet;
 	} while (false);
 
-	return result_55740;
+	return result_55742;
 
 }
 
@@ -589,7 +591,7 @@ function draw_56003(canvas_56005, point_56007) {
 		var height_56010 = canvas_56005.height;
 		var x_56011 = (point_56007["Field0"] * width_56009);
 		var y_56012 = (height_56010 - (point_56007["Field1"] * height_56010));
-		if (isContained_55001(point_56007["Field0"], point_56007["Field1"])) {
+		if (isContained_55001(point_56007["Field0"], point_56007["Field1"], 1.0000000000000000e+000)) {
 		Tmp1 = makeNimstrLit("#eb6101");
 		}
 		else {
@@ -654,11 +656,11 @@ function init_56070() {
 
 		var width_56079 = nimMin(600, window.innerWidth);
 		var height_56080 = nimMin(600, window.innerWidth);
-		var points_56083 = getPoints_55008(10000, 1.0000000000000000e+000);
+		var points_56083 = getPoints_55009(10000, 1.0000000000000000e+000);
 		var canvas_56084 = document.getElementById("monte-carlo");
 		canvas_56084.width = width_56079;
 		canvas_56084.height = height_56080;
-		document.getElementById("pi").innerHTML = toJSStr((makeNimstrLit("Pi = ").slice(0,-1)).concat(cstrToNimstr((monteCarlo_55735(points_56083))+"")));
+		document.getElementById("pi").innerHTML = toJSStr((makeNimstrLit("Pi = ").slice(0,-1)).concat(cstrToNimstr((monteCarlo_55737(points_56083))+"")));
 		cls_56017(canvas_56084);
 		var timer_56088 = window.setInterval(colonanonymous__56086, 1);
 		window.addEventListener("resize", colonanonymous__56089, false);
