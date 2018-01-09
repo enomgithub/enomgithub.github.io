@@ -313,35 +313,11 @@ function nimCopyAux(dest_19822, src_19823, n_19825) {
 	
 }
 
-function getd_49035(gear_49037) {
-	var result_49038 = 0.0;
-
-	BeforeRet: do {
-		result_49038 = (gear_49037.m * gear_49037.z);
-		break BeforeRet;
-	} while (false);
-
-	return result_49038;
-
-}
-
-function getda_49043(gear_49045) {
-	var result_49046 = 0.0;
-
-	BeforeRet: do {
-		result_49046 = (getd_49035(gear_49045) + (2.0000000000000000e+000 * gear_49045.m));
-		break BeforeRet;
-	} while (false);
-
-	return result_49046;
-
-}
-
-function getdb_49039(gear_49041) {
+function getd_49039(gear_49041) {
 	var result_49042 = 0.0;
 
 	BeforeRet: do {
-		result_49042 = (getd_49035(gear_49041) * Math.cos(gear_49041.alpha));
+		result_49042 = (gear_49041.m * gear_49041.z);
 		break BeforeRet;
 	} while (false);
 
@@ -349,15 +325,39 @@ function getdb_49039(gear_49041) {
 
 }
 
-function getdf_49047(gear_49049) {
+function getda_49047(gear_49049) {
 	var result_49050 = 0.0;
 
 	BeforeRet: do {
-		result_49050 = (getd_49035(gear_49049) - (2.5000000000000000e+000 * gear_49049.m));
+		result_49050 = (getd_49039(gear_49049) + (2.0000000000000000e+000 * gear_49049.m));
 		break BeforeRet;
 	} while (false);
 
 	return result_49050;
+
+}
+
+function getdb_49043(gear_49045) {
+	var result_49046 = 0.0;
+
+	BeforeRet: do {
+		result_49046 = (getd_49039(gear_49045) * Math.cos(gear_49045.alpha));
+		break BeforeRet;
+	} while (false);
+
+	return result_49046;
+
+}
+
+function getdf_49051(gear_49053) {
+	var result_49054 = 0.0;
+
+	BeforeRet: do {
+		result_49054 = (getd_49039(gear_49053) - (2.5000000000000000e+000 * gear_49053.m));
+		break BeforeRet;
+	} while (false);
+
+	return result_49054;
 
 }
 
@@ -367,21 +367,21 @@ function stareq__40735(x_40740, x_40740_Idx, y_40742) {
 	
 }
 
-function roof__49068(x_49072, y_49074) {
-	var result_49075 = [0.0];
+function roof__49072(x_49076, y_49078) {
+	var result_49079 = [0.0];
 
-		var colontmp__51819 = {Field0: 0.0, Field1: 0};
+		var colontmp__51798 = {Field0: 0.0, Field1: 0};
 		var x_49402 = [0.0];
 		var y_49403 = 0;
-		nimCopy(colontmp__51819, {Field0: x_49072, Field1: y_49074}, NTI49401);
-		x_49402[0] = colontmp__51819["Field0"];
-		y_49403 = colontmp__51819["Field1"];
-		result_49075[0] = 1.0000000000000000e+000;
+		nimCopy(colontmp__51798, {Field0: x_49076, Field1: y_49078}, NTI49401);
+		x_49402[0] = colontmp__51798["Field0"];
+		y_49403 = colontmp__51798["Field1"];
+		result_49079[0] = 1.0000000000000000e+000;
 		L1: do {
 				L2: while (true) {
 				if (!true) break L2;
 					if (!(((y_49403 & 1) == 0))) {
-					stareq__40735(result_49075, 0, x_49402[0]);
+					stareq__40735(result_49079, 0, x_49402[0]);
 					}
 					
 					y_49403 = ((y_49403 >>> 0) >>> 1);
@@ -393,7 +393,7 @@ function roof__49068(x_49072, y_49074) {
 				}
 		} while(false);
 
-	return result_49075[0];
+	return result_49079[0];
 
 }
 
@@ -401,8 +401,8 @@ function getTheta_49447(gear_49449, r_49450) {
 	var result_49451 = 0.0;
 
 	BeforeRet: do {
-		var rb_49452 = (getdb_49039(gear_49449) / 2.0000000000000000e+000);
-		result_49451 = (Math.sqrt((roof__49068(r_49450, 2) - roof__49068(rb_49452, 2))) / rb_49452);
+		var rb_49452 = (getdb_49043(gear_49449) / 2.0000000000000000e+000);
+		result_49451 = (Math.sqrt((roof__49072(r_49450, 2) - roof__49072(rb_49452, 2))) / rb_49452);
 		break BeforeRet;
 	} while (false);
 
@@ -522,7 +522,7 @@ function isContained_49470(x_49472, y_49473, threshold_49474) {
 	var result_49475 = false;
 
 	BeforeRet: do {
-		var distance_49492 = (Math.sqrt((1.0000000000000000e+000 + (roof__49068(y_49473, 2) / roof__49068(x_49472, 2)))) * x_49472);
+		var distance_49492 = (Math.sqrt((1.0000000000000000e+000 + (roof__49072(y_49473, 2) / roof__49072(x_49472, 2)))) * x_49472);
 		if ((distance_49492 <= threshold_49474)) {
 		Tmp1 = true;
 		}
@@ -626,10 +626,10 @@ function getInvolute_49710(gear_49712, dtheta_49713) {
 	var result_49715 = null;
 
 	BeforeRet: do {
-		var ra_49716 = (getda_49043(gear_49712) / 2.0000000000000000e+000);
-		var rb_49717 = (getdb_49039(gear_49712) / 2.0000000000000000e+000);
-		var rf_49718 = (getdf_49047(gear_49712) / 2.0000000000000000e+000);
-		if ((getdf_49047(gear_49712) < getdb_49039(gear_49712))) {
+		var ra_49716 = (getda_49047(gear_49712) / 2.0000000000000000e+000);
+		var rb_49717 = (getdb_49043(gear_49712) / 2.0000000000000000e+000);
+		var rf_49718 = (getdf_49051(gear_49712) / 2.0000000000000000e+000);
+		if ((getdf_49051(gear_49712) < getdb_49043(gear_49712))) {
 		Tmp1 = getTheta_49447(gear_49712, rb_49717);
 		}
 		else {
@@ -655,8 +655,8 @@ function getInvolute_49710(gear_49712, dtheta_49713) {
 			} while(false);
 		} while(false);
 		safeAdd_49736(points_49723, 0, getInvPoint_49610(rb_49717, maxTheta_49721));
-		if ((getdf_49047(gear_49712) < getdb_49039(gear_49712))) {
-		var rfrev_50316 = (((2.0000000000000000e+000 * getdb_49039(gear_49712)) - getdf_49047(gear_49712)) / 2.0000000000000000e+000);
+		if ((getdf_49051(gear_49712) < getdb_49043(gear_49712))) {
+		var rfrev_50316 = (((2.0000000000000000e+000 * getdb_49043(gear_49712)) - getdf_49051(gear_49712)) / 2.0000000000000000e+000);
 		var idf_50317 = getIndex_49494(points_49723[0], rfrev_50316);
 		points_49723[0] = nimCopy(null, amp__50431(reversed_50328(points_49723[0], 1, idf_50317), points_49723[0]), NTI50440);
 		L5: do {
@@ -817,7 +817,7 @@ function init_51577(gears_51580, gears_51580_Idx, m_51581, z1_51582, z2_51583, a
 		gears_51580[gears_51580_Idx].gear1.involutes = nimCopy(null, newSeq_51620(z1_51582), NTI51625);
 		gears_51580[gears_51580_Idx].gear1.involutesCCW = nimCopy(null, newSeq_51620(z1_51582), NTI51625);
 		gears_51580[gears_51580_Idx].gear1.centerx = (width_51585 / 2.0000000000000000e+000);
-		gears_51580[gears_51580_Idx].gear1.centery = ((height_51586 - getd_49035(gears_51580[gears_51580_Idx].gear1)) / 2.0000000000000000e+000);
+		gears_51580[gears_51580_Idx].gear1.centery = ((height_51586 - getd_49039(gears_51580[gears_51580_Idx].gear1)) / 2.0000000000000000e+000);
 		getInvolutes_50562(gears_51580[gears_51580_Idx].gear1, dtheta_51587, 0);
 		gears_51580[gears_51580_Idx].gear2 = {m: 0.0, z: 0, alpha: 0.0, involutes: null, involutesCCW: null, centerx: 0.0, centery: 0.0};
 		gears_51580[gears_51580_Idx].gear2.m = m_51581;
@@ -826,7 +826,7 @@ function init_51577(gears_51580, gears_51580_Idx, m_51581, z1_51582, z2_51583, a
 		gears_51580[gears_51580_Idx].gear2.involutes = nimCopy(null, newSeq_51620(z2_51583), NTI51625);
 		gears_51580[gears_51580_Idx].gear2.involutesCCW = nimCopy(null, newSeq_51620(z2_51583), NTI51625);
 		gears_51580[gears_51580_Idx].gear2.centerx = (width_51585 / 2.0000000000000000e+000);
-		gears_51580[gears_51580_Idx].gear2.centery = ((height_51586 + getd_49035(gears_51580[gears_51580_Idx].gear2)) / 2.0000000000000000e+000);
+		gears_51580[gears_51580_Idx].gear2.centery = ((height_51586 + getd_49039(gears_51580[gears_51580_Idx].gear2)) / 2.0000000000000000e+000);
 		getInvolutes_50562(gears_51580[gears_51580_Idx].gear2, dtheta_51587, 2);
 
 	
@@ -857,23 +857,11 @@ function round_40707(x_40711, places_40713) {
 
 }
 
-function getha_49051(gear_49053) {
-	var result_49054 = 0.0;
-
-	BeforeRet: do {
-		result_49054 = gear_49053.m;
-		break BeforeRet;
-	} while (false);
-
-	return result_49054;
-
-}
-
-function geth_49055(gear_49057) {
+function getha_49055(gear_49057) {
 	var result_49058 = 0.0;
 
 	BeforeRet: do {
-		result_49058 = (2.2500000000000000e+000 * gear_49057.m);
+		result_49058 = gear_49057.m;
 		break BeforeRet;
 	} while (false);
 
@@ -881,25 +869,11 @@ function geth_49055(gear_49057) {
 
 }
 
-function showParameter_51501(gear_51503, name_51504) {
-		document.getElementById(toJSStr((makeNimstrLit("m-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((gear_51503.m)+""));
-		document.getElementById(toJSStr((makeNimstrLit("alpha-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((radToDeg_43447(gear_51503.alpha))+""));
-		document.getElementById(toJSStr((makeNimstrLit("z-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((gear_51503.z)+""));
-		document.getElementById(toJSStr((makeNimstrLit("d-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getd_49035(gear_51503), 2))+""));
-		document.getElementById(toJSStr((makeNimstrLit("db-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getdb_49039(gear_51503), 2))+""));
-		document.getElementById(toJSStr((makeNimstrLit("ha-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getha_49051(gear_51503), 2))+""));
-		document.getElementById(toJSStr((makeNimstrLit("h-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(geth_49055(gear_51503), 2))+""));
-		document.getElementById(toJSStr((makeNimstrLit("da-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getda_49043(gear_51503), 2))+""));
-		document.getElementById(toJSStr((makeNimstrLit("df-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getdf_49047(gear_51503), 2))+""));
-
-	
-}
-
-function geta_49059(gears_49061) {
+function geth_49059(gear_49061) {
 	var result_49062 = 0.0;
 
 	BeforeRet: do {
-		result_49062 = ((getd_49035(gears_49061.gear1) + getd_49035(gears_49061.gear2)) / 2.0000000000000000e+000);
+		result_49062 = (2.2500000000000000e+000 * gear_49061.m);
 		break BeforeRet;
 	} while (false);
 
@@ -907,10 +881,36 @@ function geta_49059(gears_49061) {
 
 }
 
+function showParameter_51501(gear_51503, name_51504) {
+		document.getElementById(toJSStr((makeNimstrLit("m-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((gear_51503.m)+""));
+		document.getElementById(toJSStr((makeNimstrLit("alpha-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((radToDeg_43447(gear_51503.alpha))+""));
+		document.getElementById(toJSStr((makeNimstrLit("z-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((gear_51503.z)+""));
+		document.getElementById(toJSStr((makeNimstrLit("d-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getd_49039(gear_51503), 2))+""));
+		document.getElementById(toJSStr((makeNimstrLit("db-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getdb_49043(gear_51503), 2))+""));
+		document.getElementById(toJSStr((makeNimstrLit("ha-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getha_49055(gear_51503), 2))+""));
+		document.getElementById(toJSStr((makeNimstrLit("h-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(geth_49059(gear_51503), 2))+""));
+		document.getElementById(toJSStr((makeNimstrLit("da-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getda_49047(gear_51503), 2))+""));
+		document.getElementById(toJSStr((makeNimstrLit("df-").slice(0,-1)).concat(name_51504))).innerHTML = toJSStr(cstrToNimstr((round_40707(getdf_49051(gear_51503), 2))+""));
+
+	
+}
+
+function geta_49063(gears_49065) {
+	var result_49066 = 0.0;
+
+	BeforeRet: do {
+		result_49066 = ((getd_49039(gears_49065.gear1) + getd_49039(gears_49065.gear2)) / 2.0000000000000000e+000);
+		break BeforeRet;
+	} while (false);
+
+	return result_49066;
+
+}
+
 function showParameter_51553(gears_51555) {
 		showParameter_51501(gears_51555.gear1, makeNimstrLit("gear1"));
 		showParameter_51501(gears_51555.gear2, makeNimstrLit("gear2"));
-		document.getElementById("a").innerHTML = toJSStr(cstrToNimstr((round_40707(geta_49059(gears_51555), 2))+""));
+		document.getElementById("a").innerHTML = toJSStr(cstrToNimstr((round_40707(geta_49063(gears_51555), 2))+""));
 
 	
 }
@@ -1006,31 +1006,31 @@ function drawPolygonalLine_50604(ctx_50606, points_50608, xoffset_50609, yoffset
 	
 }
 
-function getTheta_49063(point_49065) {
-	var result_49066 = 0.0;
+function getTheta_49067(point_49069) {
+	var result_49070 = 0.0;
 
 	BeforeRet: do {
-		var r_49443 = Math.sqrt((roof__49068(point_49065.x, 2) + roof__49068(point_49065.y, 2)));
-		if ((0.0 <= point_49065.y)) {
-		result_49066 = Math.acos((point_49065.x / r_49443));
+		var r_49443 = Math.sqrt((roof__49072(point_49069.x, 2) + roof__49072(point_49069.y, 2)));
+		if ((0.0 <= point_49069.y)) {
+		result_49070 = Math.acos((point_49069.x / r_49443));
 		break BeforeRet;
 		}
 		else {
-			result_49066 = (6.2831853071795862e+000 - Math.acos((point_49065.x / r_49443)));
+			result_49070 = (6.2831853071795862e+000 - Math.acos((point_49069.x / r_49443)));
 			break BeforeRet;
 		}
 		
 	} while (false);
 
-	return result_49066;
+	return result_49070;
 
 }
 
 function drawda_51022(ctx_51024, involute_51026, involuteCCW_51027, xoffset_51028, yoffset_51029, lineWidth_51030, color_51031) {
 		var last_51209 = (involute_51026 != null ? (involute_51026.length-1) : -1);
-		var theta0_51210 = getTheta_49063(involute_51026[last_51209]);
-		var theta1_51211 = getTheta_49063(involuteCCW_51027[last_51209]);
-		var ra_51228 = Math.sqrt((roof__49068(involute_51026[last_51209].x, 2) + roof__49068(involute_51026[last_51209].y, 2)));
+		var theta0_51210 = getTheta_49067(involute_51026[last_51209]);
+		var theta1_51211 = getTheta_49067(involuteCCW_51027[last_51209]);
+		var ra_51228 = Math.sqrt((roof__49072(involute_51026[last_51209].x, 2) + roof__49072(involute_51026[last_51209].y, 2)));
 		ctx_51024.beginPath();
 		ctx_51024.arc(xoffset_51028, yoffset_51029, ra_51228, theta0_51210, theta1_51211, false);
 		ctx_51024.stroke();
@@ -1040,10 +1040,10 @@ function drawda_51022(ctx_51024, involute_51026, involuteCCW_51027, xoffset_5102
 
 function drawdf_51233(ctx_51235, involute0_51237, involute1_51238, xoffset_51239, yoffset_51240, lineWidth_51241, color_51242) {
 		var first_51408 = 0;
-		var theta0_51409 = getTheta_49063(involute0_51237[first_51408]);
-		var theta1_51410 = getTheta_49063(involute1_51238[first_51408]);
+		var theta0_51409 = getTheta_49067(involute0_51237[first_51408]);
+		var theta1_51410 = getTheta_49067(involute1_51238[first_51408]);
 		var point_51411 = nimCopy(null, involute0_51237[first_51408], NTI42021);
-		var rf_51428 = Math.sqrt((roof__49068(point_51411.x, 2) + roof__49068(point_51411.y, 2)));
+		var rf_51428 = Math.sqrt((roof__49072(point_51411.x, 2) + roof__49072(point_51411.y, 2)));
 		ctx_51235.beginPath();
 		ctx_51235.arc(xoffset_51239, yoffset_51240, rf_51428, theta0_51409, theta1_51410, false);
 		ctx_51235.stroke();
@@ -1144,67 +1144,50 @@ function loop_51564(canvas_51566, gears_51567) {
 	
 }
 
-function main_51746() {
+function init_51746(maxwidth_51748, maxheight_51749, canvasid_51750, bgcolor_51751, ms_51752, m_51753, z1_51754, z2_51755, alpha_51756, dtheta_51757, zoom_51758, show_51759) {
 
-		function colonanonymous__51771() {
-				loop_51564(canvas_51767, gears_51768[0]);
-
-			
-		}
-
-		function colonanonymous__51774(e_51776) {
-				resize_51739(canvas_51767, 600, gears_51768[0]);
+		function colonanonymous__51766() {
+				loop_51564(canvas_51762, gears_51763[0]);
 
 			
 		}
 
-		var width_51765 = nimMin(600, window.innerWidth);
-		var height_51766 = 600;
-		var canvas_51767 = document.getElementById("involute");
-		var gears_51768 = [null];
-		init_51577(gears_51768, 0, 4.0000000000000000e+000, 67, 47, 3.4906585039886590e-001, width_51765, height_51766, 1.7453292519943295e-002);
-		showParameter_51553(gears_51768[0]);
-		canvas_51767.width = width_51765;
-		canvas_51767.height = height_51766;
-		canvas_51767.style.backgroundColor = "#302833";
-		resize_51739(canvas_51767, 600, gears_51768[0]);
-		var timer_51773 = window.setInterval(colonanonymous__51771, 16);
-		window.addEventListener("resize", colonanonymous__51774, false);
+		function colonanonymous__51769(e_51771) {
+				resize_51739(canvas_51762, maxwidth_51748, gears_51763[0]);
+
+			
+		}
+
+		var width_51760 = nimMin(maxwidth_51748, window.innerWidth);
+		var height_51761 = maxheight_51749;
+		var canvas_51762 = document.getElementById(canvasid_51750);
+		var gears_51763 = [null];
+		init_51577(gears_51763, 0, (m_51753 * zoom_51758), z1_51754, z2_51755, alpha_51756, width_51760, height_51761, dtheta_51757);
+		switch (show_51759) {
+		case 0:
+			showParameter_51553(gears_51763[0]);
+			break;
+		default: 
+			break;
+		}
+		canvas_51762.width = width_51760;
+		canvas_51762.height = height_51761;
+		canvas_51762.style.backgroundColor = bgcolor_51751;
+		resize_51739(canvas_51762, maxwidth_51748, gears_51763[0]);
+		var timer_51768 = window.setInterval(colonanonymous__51766, ms_51752);
+		window.addEventListener("resize", colonanonymous__51769, false);
 
 	
 }
 
-function mainZoom_51782() {
-
-		function colonanonymous__51808() {
-				loop_51564(canvas_51804, gears_51805[0]);
-
-			
-		}
-
-		function colonanonymous__51811(e_51813) {
-				resize_51739(canvas_51804, 600, gears_51805[0]);
-
-			
-		}
-
-		var width_51802 = nimMin(600, window.innerWidth);
-		var height_51803 = 600;
-		var canvas_51804 = document.getElementById("involute-zoom");
-		var gears_51805 = [null];
-		init_51577(gears_51805, 0, 4.0000000000000000e+001, 37, 34, 3.4906585039886590e-001, width_51802, height_51803, 1.7453292519943295e-002);
-		canvas_51804.width = width_51802;
-		canvas_51804.height = height_51803;
-		canvas_51804.style.backgroundColor = "#302833";
-		resize_51739(canvas_51804, 600, gears_51805[0]);
-		var timer_51810 = window.setInterval(colonanonymous__51808, 16);
-		window.addEventListener("resize", colonanonymous__51811, false);
+function main_51777() {
+		init_51746(600, 600, "involute", "#302833", 16, 4.0000000000000000e+000, 67, 47, 3.4906585039886590e-001, 1.7453292519943295e-002, 1.0000000000000000e+000, 0);
+		init_51746(600, 600, "involute-zoom", "#302833", 16, 4.0000000000000000e+000, 67, 47, 3.4906585039886590e-001, 1.7453292519943295e-002, 5.0000000000000000e+000, 1);
 
 	
 }
 if (true) {
-main_51746();
-mainZoom_51782();
+main_51777();
 }
 
 

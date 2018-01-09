@@ -37,6 +37,10 @@ type
     drBottom,
     drLeft
 
+  Show = enum
+    Yes,
+    No
+
 
 proc getd(gear: Gear): float =
   ## 基準円直径 d
@@ -367,12 +371,35 @@ proc init(gears: var Gears, m: float, z1, z2: int,
 proc resize(canvas: Canvas, maxwidth: int, gears: Gears) =
   let
     width: int =
-      if 1.6 * maxwidth.toFloat <= window.innerWidth.toFloat: (1.6 * maxwidth.toFloat / 2.0).toInt
+      if 1.6 * maxwidth.toFloat <= window.innerWidth.toFloat:
+        (1.6 * maxwidth.toFloat / 2.0).toInt
       elif maxwidth <= window.innerWidth: maxwidth div 2
       else: window.innerWidth
   canvas.width = width
   gears.gear1.centerx = width.toFloat / 2.0
   gears.gear2.centerx = width.toFloat / 2.0
+
+
+proc init(maxwidth, maxheight: int, canvasid, bgcolor: cstring, ms: int,
+          m: float, z1, z2: int, alpha, dtheta, zoom: float, show=Yes) =
+  let
+    width: int = min(maxwidth, window.innerWidth)
+    height: int = maxheight
+    canvas: Canvas = Canvas(document.getElementById(canvasid))
+  var gears: Gears
+  gears.init(m * zoom, z1, z2, alpha, width.toFloat, height.toFloat, dtheta)
+  case show
+  of Yes: gears.showParameter
+  else: discard
+  canvas.width = width
+  canvas.height = height
+  canvas.style.backgroundColor = bgcolor
+  canvas.resize(maxwidth, gears)
+  let timer: ref TInterval =
+    window.setInterval(proc() = loop(canvas, gears), ms)
+  window.addEventListener("resize",
+                          proc(e: Event) = canvas.resize(maxwidth, gears),
+                          false)
 
 
 proc main() =
@@ -387,53 +414,15 @@ proc main() =
     Z2: int = 47
     ALPHA: float = 20.0 * math.Pi / 180.0
     DTHETA: float = math.Pi / 180.0
-  let
-    width: int = min(MAXWIDTH, window.innerWidth)
-    height: int = MAXHEIGHT
-    canvas: Canvas = Canvas(document.getElementById(CANVASID))
-  var gears: Gears
-  gears.init(M, Z1, Z2, ALPHA, width.toFloat, height.toFloat, DTHETA)
-  gears.showParameter
-  canvas.width = width
-  canvas.height = height
-  canvas.style.backgroundColor = BGCOLOR
-  canvas.resize(MAXWIDTH, gears)
-  let timer: ref TInterval =
-    window.setInterval(proc() = loop(canvas, gears), MS)
-  window.addEventListener("resize",
-                          proc(e: Event) = canvas.resize(MAXWIDTH, gears),
-                          false)
+  init(MAXWIDTH, MAXHEIGHT, CANVASID, BGCOLOR, MS,
+       M, Z1, Z2, ALPHA, DTHETA, 1.0)
 
-
-proc mainZoom() =
   const
-    MAXWIDTH: int = 600
-    MAXHEIGHT: int = 600
-    CANVASID: cstring = "involute-zoom"
-    BGCOLOR: cstring = "#302833"
-    MS: int = 16
-    M: float = 4.0 * 10.0
-    Z1: int = 37
-    Z2: int = 34
-    ALPHA: float = 20.0 * math.Pi / 180.0
-    DTHETA: float = math.Pi / 180.0
-  let
-    width: int = min(MAXWIDTH, window.innerWidth)
-    height: int = MAXHEIGHT
-    canvas: Canvas = Canvas(document.getElementById(CANVASID))
-  var gears: Gears
-  gears.init(M, Z1, Z2, ALPHA, width.toFloat, height.toFloat, DTHETA)
-  canvas.width = width
-  canvas.height = height
-  canvas.style.backgroundColor = BGCOLOR
-  canvas.resize(MAXWIDTH, gears)
-  let timer: ref TInterval =
-    window.setInterval(proc() = loop(canvas, gears), MS)
-  window.addEventListener("resize",
-                          proc(e: Event) = canvas.resize(MAXWIDTH, gears),
-                          false)
+    CANVASIDZOOM: cstring = "involute-zoom"
+    ZOOM: float = 5.0
+  init(MAXWIDTH, MAXHEIGHT, CANVASIDZOOM, BGCOLOR, MS,
+       M, Z1, Z2, ALPHA, DTHETA, ZOOM, No)
 
 
 if isMainModule:
   main()
-  mainZoom()
