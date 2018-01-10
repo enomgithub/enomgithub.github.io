@@ -417,7 +417,7 @@ proc main() =
     Z1: int = 67
     Z2: int = 47
     ALPHA: float = 20.0 * math.Pi / 180.0
-    DTHETA: float = math.Pi / 180.0
+    DTHETA: float = math.Pi / 45.0
   init(MAXWIDTH, MAXHEIGHT, CANVASID, BGCOLOR, MS,
        M, Z1, Z2, ALPHA, DTHETA, 1.0)
 
