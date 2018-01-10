@@ -342,30 +342,34 @@ proc loop(canvas: Canvas, gears: Gears) =
   gears.rotate(THETA)
 
 
+proc init(gear: var Gear, m: float, z: int, alpha, dtheta,
+          width, height: float, direction=drTop) =
+  ## Gearオブジェクトのコンストラクタ
+  gear.new
+  gear.m = m
+  gear.z = z
+  gear.alpha = alpha
+  gear.involutes = newSeq[seq[Point2d]](z)
+  gear.involutesCCW = newSeq[seq[Point2d]](z)
+  gear.centerx =
+    case direction
+    of drLeft: (width - gear.getd) / 2.0
+    of drRight: (width + gear.getd) / 2.0
+    else: height / 2.0
+  gear.centery =
+    case direction
+    of drTop: (height - gear.getd) / 2.0
+    of drBottom: (height + gear.getd) / 2.0
+    else: height / 2.0
+  gear.getInvolutes(dtheta, direction)
+
+
 proc init(gears: var Gears, m: float, z1, z2: int,
-          alpha, width, height, dtheta: float) =
+          alpha, dtheta, width, height: float) =
   ## Gearsオブジェクトのコンストラクタ
   gears.new
-
-  gears.gear1.new
-  gears.gear1.m = m
-  gears.gear1.z = z1
-  gears.gear1.alpha = alpha
-  gears.gear1.involutes = newSeq[seq[Point2d]](z1)
-  gears.gear1.involutesCCW = newSeq[seq[Point2d]](z1)
-  gears.gear1.centerx = width / 2.0
-  gears.gear1.centery = (height - gears.gear1.getd) / 2.0
-  gears.gear1.getInvolutes(dtheta, direction=drTop)
-
-  gears.gear2.new
-  gears.gear2.m = m
-  gears.gear2.z = z2
-  gears.gear2.alpha = alpha
-  gears.gear2.involutes = newSeq[seq[Point2d]](z2)
-  gears.gear2.involutesCCW = newSeq[seq[Point2d]](z2)
-  gears.gear2.centerx = width / 2.0
-  gears.gear2.centery = (height + gears.gear2.getd) / 2.0
-  gears.gear2.getInvolutes(dtheta, direction=drBottom)
+  gears.gear1.init(m, z1, alpha, dtheta, width, height)
+  gears.gear2.init(m, z2, alpha, dtheta, width, height, drBottom)
 
 
 proc resize(canvas: Canvas, maxwidth: int, gears: Gears) =
@@ -387,7 +391,7 @@ proc init(maxwidth, maxheight: int, canvasid, bgcolor: cstring, ms: int,
     height: int = maxheight
     canvas: Canvas = Canvas(document.getElementById(canvasid))
   var gears: Gears
-  gears.init(m * zoom, z1, z2, alpha, width.toFloat, height.toFloat, dtheta)
+  gears.init(m * zoom, z1, z2, alpha, dtheta, width.toFloat, height.toFloat)
   case show
   of Yes: gears.showParameter
   else: discard

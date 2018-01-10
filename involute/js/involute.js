@@ -24,13 +24,13 @@ var NTI3404 = {size: 0,kind: 20,base: null,node: null,finalizer: null};
 var NTI49401 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
 var NTI124 = {size: 0,kind: 36,base: null,node: null,finalizer: null};
 var NTI42021 = {size: 0, kind: 18, base: null, node: null, finalizer: null};
-var NTI51607 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
-var NTI51625 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
+var NTI51599 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
+var NTI51617 = {size: 0,kind: 24,base: null,node: null,finalizer: null};
 var NNI42021 = {kind: 2, len: 2, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "x", len: 0, typ: NTI124, name: "x", sons: null}, 
 {kind: 1, offset: "y", len: 0, typ: NTI124, name: "y", sons: null}]};
 NTI42021.node = NNI42021;
-NTI51607.base = NTI42021;
-NTI51625.base = NTI51607;
+NTI51599.base = NTI42021;
+NTI51617.base = NTI51599;
 NTI3404.base = NTI104;
 var NNI49401 = {kind: 2, len: 2, offset: 0, typ: null, name: null, sons: [{kind: 1, offset: "Field0", len: 0, typ: NTI124, name: "Field0", sons: null}, 
 {kind: 1, offset: "Field1", len: 0, typ: NTI3404, name: "Field1", sons: null}]};
@@ -257,11 +257,11 @@ var ORIGO_42057 = point2d_42052(0.0, 0.0);
 var XAXIS_42058 = vector2d_42048(1.0000000000000000e+000, 0.0);
 var YAXIS_42059 = vector2d_42048(0.0, 1.0000000000000000e+000);
 
-function newSeq_51620(len_51624) {
-	var result_51626 = null;
+function newSeq_51612(len_51616) {
+	var result_51618 = null;
 
-		result_51626 = new Array(len_51624); for (var i=0;i<len_51624;++i) {result_51626[i]=null;}
-	return result_51626;
+		result_51618 = new Array(len_51616); for (var i=0;i<len_51616;++i) {result_51618[i]=null;}
+	return result_51618;
 
 }
 
@@ -370,12 +370,12 @@ function stareq__40735(x_40740, x_40740_Idx, y_40742) {
 function roof__49072(x_49076, y_49078) {
 	var result_49079 = [0.0];
 
-		var colontmp__51798 = {Field0: 0.0, Field1: 0};
+		var colontmp__51745 = {Field0: 0.0, Field1: 0};
 		var x_49402 = [0.0];
 		var y_49403 = 0;
-		nimCopy(colontmp__51798, {Field0: x_49076, Field1: y_49078}, NTI49401);
-		x_49402[0] = colontmp__51798["Field0"];
-		y_49403 = colontmp__51798["Field1"];
+		nimCopy(colontmp__51745, {Field0: x_49076, Field1: y_49078}, NTI49401);
+		x_49402[0] = colontmp__51745["Field0"];
+		y_49403 = colontmp__51745["Field1"];
 		result_49079[0] = 1.0000000000000000e+000;
 		L1: do {
 				L2: while (true) {
@@ -808,26 +808,49 @@ function getInvolutes_50562(gear_50564, dtheta_50565, direction_50566) {
 	
 }
 
-function init_51577(gears_51580, gears_51580_Idx, m_51581, z1_51582, z2_51583, alpha_51584, width_51585, height_51586, dtheta_51587) {
-		gears_51580[gears_51580_Idx] = {gear1: null, gear2: null};
-		gears_51580[gears_51580_Idx].gear1 = {m: 0.0, z: 0, alpha: 0.0, involutes: null, involutesCCW: null, centerx: 0.0, centery: 0.0};
-		gears_51580[gears_51580_Idx].gear1.m = m_51581;
-		gears_51580[gears_51580_Idx].gear1.z = z1_51582;
-		gears_51580[gears_51580_Idx].gear1.alpha = alpha_51584;
-		gears_51580[gears_51580_Idx].gear1.involutes = nimCopy(null, newSeq_51620(z1_51582), NTI51625);
-		gears_51580[gears_51580_Idx].gear1.involutesCCW = nimCopy(null, newSeq_51620(z1_51582), NTI51625);
-		gears_51580[gears_51580_Idx].gear1.centerx = (width_51585 / 2.0000000000000000e+000);
-		gears_51580[gears_51580_Idx].gear1.centery = ((height_51586 - getd_49039(gears_51580[gears_51580_Idx].gear1)) / 2.0000000000000000e+000);
-		getInvolutes_50562(gears_51580[gears_51580_Idx].gear1, dtheta_51587, 0);
-		gears_51580[gears_51580_Idx].gear2 = {m: 0.0, z: 0, alpha: 0.0, involutes: null, involutesCCW: null, centerx: 0.0, centery: 0.0};
-		gears_51580[gears_51580_Idx].gear2.m = m_51581;
-		gears_51580[gears_51580_Idx].gear2.z = z2_51583;
-		gears_51580[gears_51580_Idx].gear2.alpha = alpha_51584;
-		gears_51580[gears_51580_Idx].gear2.involutes = nimCopy(null, newSeq_51620(z2_51583), NTI51625);
-		gears_51580[gears_51580_Idx].gear2.involutesCCW = nimCopy(null, newSeq_51620(z2_51583), NTI51625);
-		gears_51580[gears_51580_Idx].gear2.centerx = (width_51585 / 2.0000000000000000e+000);
-		gears_51580[gears_51580_Idx].gear2.centery = ((height_51586 + getd_49039(gears_51580[gears_51580_Idx].gear2)) / 2.0000000000000000e+000);
-		getInvolutes_50562(gears_51580[gears_51580_Idx].gear2, dtheta_51587, 2);
+function init_51577(gear_51580, gear_51580_Idx, m_51581, z_51582, alpha_51583, dtheta_51584, width_51585, height_51586, direction_51587) {
+		var Tmp1;
+		var Tmp2;
+
+		gear_51580[gear_51580_Idx] = {m: 0.0, z: 0, alpha: 0.0, involutes: null, involutesCCW: null, centerx: 0.0, centery: 0.0};
+		gear_51580[gear_51580_Idx].m = m_51581;
+		gear_51580[gear_51580_Idx].z = z_51582;
+		gear_51580[gear_51580_Idx].alpha = alpha_51583;
+		gear_51580[gear_51580_Idx].involutes = nimCopy(null, newSeq_51612(z_51582), NTI51617);
+		gear_51580[gear_51580_Idx].involutesCCW = nimCopy(null, newSeq_51612(z_51582), NTI51617);
+		switch (direction_51587) {
+		case 3:
+			Tmp1 = ((width_51585 - getd_49039(gear_51580[gear_51580_Idx])) / 2.0000000000000000e+000);
+			break;
+		case 1:
+			Tmp1 = ((width_51585 + getd_49039(gear_51580[gear_51580_Idx])) / 2.0000000000000000e+000);
+			break;
+		default: 
+			Tmp1 = (height_51586 / 2.0000000000000000e+000);
+			break;
+		}
+		gear_51580[gear_51580_Idx].centerx = Tmp1;
+		switch (direction_51587) {
+		case 0:
+			Tmp2 = ((height_51586 - getd_49039(gear_51580[gear_51580_Idx])) / 2.0000000000000000e+000);
+			break;
+		case 2:
+			Tmp2 = ((height_51586 + getd_49039(gear_51580[gear_51580_Idx])) / 2.0000000000000000e+000);
+			break;
+		default: 
+			Tmp2 = (height_51586 / 2.0000000000000000e+000);
+			break;
+		}
+		gear_51580[gear_51580_Idx].centery = Tmp2;
+		getInvolutes_50562(gear_51580[gear_51580_Idx], dtheta_51584, direction_51587);
+
+	
+}
+
+function init_51665(gears_51668, gears_51668_Idx, m_51669, z1_51670, z2_51671, alpha_51672, dtheta_51673, width_51674, height_51675) {
+		gears_51668[gears_51668_Idx] = {gear1: null, gear2: null};
+		init_51577(gears_51668[gears_51668_Idx], "gear1", m_51669, z1_51670, alpha_51672, dtheta_51673, width_51674, height_51675, 0);
+		init_51577(gears_51668[gears_51668_Idx], "gear2", m_51669, z2_51671, alpha_51672, dtheta_51673, width_51674, height_51675, 2);
 
 	
 }
@@ -915,24 +938,24 @@ function showParameter_51553(gears_51555) {
 	
 }
 
-function resize_51739(canvas_51741, maxwidth_51742, gears_51743) {
+function resize_51686(canvas_51688, maxwidth_51689, gears_51690) {
 		var Tmp1;
 
-		if (((1.6000000000000001e+000 * maxwidth_51742) <= window.innerWidth)) {
-		Tmp1 = Math.floor(((1.6000000000000001e+000 * maxwidth_51742) / 2.0000000000000000e+000));
+		if (((1.6000000000000001e+000 * maxwidth_51689) <= window.innerWidth)) {
+		Tmp1 = Math.floor(((1.6000000000000001e+000 * maxwidth_51689) / 2.0000000000000000e+000));
 		}
 		else {
-		if ((maxwidth_51742 <= window.innerWidth)) {
-		Tmp1 = Math.floor(maxwidth_51742 / 2);
+		if ((maxwidth_51689 <= window.innerWidth)) {
+		Tmp1 = Math.floor(maxwidth_51689 / 2);
 		}
 		else {
 		Tmp1 = window.innerWidth;
 		}
 		}
-		var width_51744 = Tmp1;
-		canvas_51741.width = width_51744;
-		gears_51743.gear1.centerx = (width_51744 / 2.0000000000000000e+000);
-		gears_51743.gear2.centerx = (width_51744 / 2.0000000000000000e+000);
+		var width_51691 = Tmp1;
+		canvas_51688.width = width_51691;
+		gears_51690.gear1.centerx = (width_51691 / 2.0000000000000000e+000);
+		gears_51690.gear2.centerx = (width_51691 / 2.0000000000000000e+000);
 
 	
 }
@@ -1144,50 +1167,50 @@ function loop_51564(canvas_51566, gears_51567) {
 	
 }
 
-function init_51746(maxwidth_51748, maxheight_51749, canvasid_51750, bgcolor_51751, ms_51752, m_51753, z1_51754, z2_51755, alpha_51756, dtheta_51757, zoom_51758, show_51759) {
+function init_51693(maxwidth_51695, maxheight_51696, canvasid_51697, bgcolor_51698, ms_51699, m_51700, z1_51701, z2_51702, alpha_51703, dtheta_51704, zoom_51705, show_51706) {
 
-		function colonanonymous__51766() {
-				loop_51564(canvas_51762, gears_51763[0]);
-
-			
-		}
-
-		function colonanonymous__51769(e_51771) {
-				resize_51739(canvas_51762, maxwidth_51748, gears_51763[0]);
+		function colonanonymous__51713() {
+				loop_51564(canvas_51709, gears_51710[0]);
 
 			
 		}
 
-		var width_51760 = nimMin(maxwidth_51748, window.innerWidth);
-		var height_51761 = maxheight_51749;
-		var canvas_51762 = document.getElementById(canvasid_51750);
-		var gears_51763 = [null];
-		init_51577(gears_51763, 0, (m_51753 * zoom_51758), z1_51754, z2_51755, alpha_51756, width_51760, height_51761, dtheta_51757);
-		switch (show_51759) {
+		function colonanonymous__51716(e_51718) {
+				resize_51686(canvas_51709, maxwidth_51695, gears_51710[0]);
+
+			
+		}
+
+		var width_51707 = nimMin(maxwidth_51695, window.innerWidth);
+		var height_51708 = maxheight_51696;
+		var canvas_51709 = document.getElementById(canvasid_51697);
+		var gears_51710 = [null];
+		init_51665(gears_51710, 0, (m_51700 * zoom_51705), z1_51701, z2_51702, alpha_51703, dtheta_51704, width_51707, height_51708);
+		switch (show_51706) {
 		case 0:
-			showParameter_51553(gears_51763[0]);
+			showParameter_51553(gears_51710[0]);
 			break;
 		default: 
 			break;
 		}
-		canvas_51762.width = width_51760;
-		canvas_51762.height = height_51761;
-		canvas_51762.style.backgroundColor = bgcolor_51751;
-		resize_51739(canvas_51762, maxwidth_51748, gears_51763[0]);
-		var timer_51768 = window.setInterval(colonanonymous__51766, ms_51752);
-		window.addEventListener("resize", colonanonymous__51769, false);
+		canvas_51709.width = width_51707;
+		canvas_51709.height = height_51708;
+		canvas_51709.style.backgroundColor = bgcolor_51698;
+		resize_51686(canvas_51709, maxwidth_51695, gears_51710[0]);
+		var timer_51715 = window.setInterval(colonanonymous__51713, ms_51699);
+		window.addEventListener("resize", colonanonymous__51716, false);
 
 	
 }
 
-function main_51777() {
-		init_51746(600, 600, "involute", "#302833", 16, 4.0000000000000000e+000, 67, 47, 3.4906585039886590e-001, 1.7453292519943295e-002, 1.0000000000000000e+000, 0);
-		init_51746(600, 600, "involute-zoom", "#302833", 16, 4.0000000000000000e+000, 67, 47, 3.4906585039886590e-001, 1.7453292519943295e-002, 5.0000000000000000e+000, 1);
+function main_51724() {
+		init_51693(600, 600, "involute", "#302833", 16, 4.0000000000000000e+000, 67, 47, 3.4906585039886590e-001, 1.7453292519943295e-002, 1.0000000000000000e+000, 0);
+		init_51693(600, 600, "involute-zoom", "#302833", 16, 4.0000000000000000e+000, 67, 47, 3.4906585039886590e-001, 1.7453292519943295e-002, 5.0000000000000000e+000, 1);
 
 	
 }
 if (true) {
-main_51777();
+main_51724();
 }
 
 
