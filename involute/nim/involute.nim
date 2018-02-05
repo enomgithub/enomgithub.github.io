@@ -2,6 +2,7 @@ import algorithm
 import basic2d
 import dom
 import math
+import random
 import strutils
 
 import HTML5_canvas as cvs
@@ -414,18 +415,22 @@ proc main() =
     BGCOLOR: cstring = "#302833"
     MS: int = 16
     M: float = 4.0
-    Z1: int = 67
-    Z2: int = 47
+    MINZ: int = 30
+    MAXZ: int = 70
     ALPHA: float = 20.0 * math.Pi / 180.0
     DTHETA: float = math.Pi / 45.0
+  random.randomize()
+  let
+    z1: int = random.random(MINZ..MAXZ + 1)
+    z2: int = random.random(MINZ..MAXZ + 1)
   init(MAXWIDTH, MAXHEIGHT, CANVASID, BGCOLOR, MS,
-       M, Z1, Z2, ALPHA, DTHETA, 1.0)
+       M, z1, z2, ALPHA, DTHETA, 1.0)
 
   const
     CANVASIDZOOM: cstring = "involute-zoom"
     ZOOM: float = 5.0
   init(MAXWIDTH, MAXHEIGHT, CANVASIDZOOM, BGCOLOR, MS,
-       M, Z1, Z2, ALPHA, DTHETA, ZOOM, No)
+       M, z1, z2, ALPHA, DTHETA, ZOOM, No)
 
 
 if isMainModule:
