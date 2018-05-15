@@ -246,11 +246,9 @@ Cloud.Simulator.prototype.drawCloud = function(cloud) {
  * draw - 背景とそれぞれの雲の描画
  */
 Cloud.Simulator.prototype.draw = function() {
-  this.ctx.globalAlpha = 1;
   this.ctx.fillStyle = this.bgcolor;
   this.ctx.fillRect(0, 0, this.width, this.height);
 
-  this.ctx.globalAlpha = 0.1;
   for (let cloud of this.clouds) {
     this.drawCloud(cloud);
   }
@@ -292,9 +290,9 @@ Cloud.init = function(width, height, ratio=1, layer=4, n=20, id) {
   document.getElementById(id).width = width;
   document.getElementById(id).height = height;
 
-  let bgcolor = 'rgb(44, 169, 225)';         // 天色
-  let colorTop = 'rgb(247, 252, 254)';       // 卯の花色
-  let colorBottom = 'rgb(132, 185, 203)';    // 浅縹
+  let bgcolor = 'rgba(44, 169, 225, 1.0)';         // 天色
+  let colorTop = 'rgba(247, 252, 254, 0.1)';       // 卯の花色
+  let colorBottom = 'rgba(132, 185, 203, 0.1)';    // 浅縹
   Cloud.simulator = new Cloud.Simulator(width, height, id, bgcolor, ratio);
 
   // 描画しやすくするため、奥の雲から作成していく
