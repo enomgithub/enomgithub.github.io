@@ -1,0 +1,64 @@
+@import url("../../common/css/green.css");
+
+.contents {
+  margin-bottom: var(--height-footer-small);
+  margin-top: var(--height-header-small);
+}
+
+.content {
+  box-sizing: border-box;
+  margin-bottom: var(--margin-small);
+  margin-top: var(--margin-small);
+}
+
+.label {
+  background-color: var(--color-moegiiro);
+  box-sizing: border-box;
+  color: var(--color-kinariiro);
+  text-align: center;
+  width: var(--width-label-small);
+}
+
+.cell {
+  padding-bottom: var(--padding-small);
+  padding-top: var(--padding-small);
+}
+
+@media (min-width: 600px) {
+  table {
+    width: 600px;
+  }
+
+  .contents {
+    margin-bottom: var(--height-footer-large);
+    margin-top: var(--height-header-large);
+  }
+
+  .content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 600px;
+  }
+
+  .cell {
+    padding-bottom: var(--padding-medium);
+    padding-top: var(--padding-medium);
+  }
+
+  .label {
+    width: var(--width-label-large);
+  }
+}
+
+@media (min-width: 960px) {
+  .contents {
+    margin-bottom: var(--height-footer-large-with-margin);
+    margin-top: var(--height-header-large-with-margin);
+  }
+
+  .contents:after {
+    clear: both;
+    content: "";
+    display: block;
+  }
+}
