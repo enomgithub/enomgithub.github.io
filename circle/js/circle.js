@@ -17,8 +17,8 @@ const unit_vector = (v) => {
 }
 
 const rand_vec = () => {
-  const x = 10 * Math.random() - 5
-  const y = 10 * Math.random() - 5
+  const x = Math.random() - 0.5
+  const y = Math.random() - 0.5
   return unit_vector(new Vector(x, y))
 }
 
