@@ -160,7 +160,7 @@ colorControlElement filePath description value buttonMsg1 buttonLabel1 buttonMsg
       ]
     , Element.column
       [ Element.alignTop
-      , Element.spacing 5
+      , Element.spacing 4
       ]
       [ Input.button
         [ Element.width Element.fill
@@ -205,7 +205,7 @@ vertexControlElement filePath description value buttonMsg1 buttonLabel1 buttonMs
       ]
     , Element.column
       [ Element.alignTop
-      , Element.spacing 5
+      , Element.spacing 4
       ]
       [ Input.button
         [ Element.width Element.fill
@@ -235,7 +235,7 @@ view model =
   in
     div
       [ style "text-align" "center"
-      , style "margin-bottom" "80px"]
+      , style "margin-bottom" "84px"]
       [ WebGL.toHtml
         [ width 400
         , height 400
