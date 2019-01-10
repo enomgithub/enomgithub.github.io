@@ -12803,7 +12803,7 @@ var author$project$Main$colorControlElement = F7(
 					_List_fromArray(
 						[
 							mdgriffith$elm_ui$Element$alignTop,
-							mdgriffith$elm_ui$Element$spacing(5)
+							mdgriffith$elm_ui$Element$spacing(4)
 						]),
 					_List_fromArray(
 						[
@@ -13062,7 +13062,7 @@ var author$project$Main$vertexControlElement = F7(
 					_List_fromArray(
 						[
 							mdgriffith$elm_ui$Element$alignTop,
-							mdgriffith$elm_ui$Element$spacing(5)
+							mdgriffith$elm_ui$Element$spacing(4)
 						]),
 					_List_fromArray(
 						[
@@ -13488,7 +13488,8 @@ var author$project$Main$view = function (model) {
 		elm$html$Html$div,
 		_List_fromArray(
 			[
-				A2(elm$html$Html$Attributes$style, 'text-align', 'center')
+				A2(elm$html$Html$Attributes$style, 'text-align', 'center'),
+				A2(elm$html$Html$Attributes$style, 'margin-bottom', '84px')
 			]),
 		_List_fromArray(
 			[

@@ -139,45 +139,45 @@ colorControlElement filePath description value buttonMsg1 buttonLabel1 buttonMsg
     , Element.spacing 5
     ]
     [ Element.column
-        []
-        [ Element.image
-          [ Element.height Element.fill
-          , Element.alignTop
-          , Element.height <| Element.px <| 64
-          , Element.width <| Element.px <| 64
-          , Element.htmlAttribute (style "image-rendering" "pixelated")
-          ]
-          { src = filePath
-          , description = description
-          }
-        , Element.el
-            [ Element.width Element.fill
-            , Element.centerX
-            , Font.color (Element.rgb255 251 250 245)
-            , Background.color (Element.rgb255 0 110 84)
-            ]
-            (Element.text value)
+      []
+      [ Element.image
+        [ Element.height Element.fill
+        , Element.alignTop
+        , Element.height <| Element.px <| 64
+        , Element.width <| Element.px <| 64
+        , Element.htmlAttribute (style "image-rendering" "pixelated")
         ]
+        { src = filePath
+        , description = description
+        }
+      , Element.el
+        [ Element.width Element.fill
+        , Element.centerX
+        , Font.color (Element.rgb255 251 250 245)
+        , Background.color (Element.rgb255 0 110 84)
+        ]
+        (Element.text value)
+      ]
     , Element.column
-        [ Element.alignTop
-        , Element.spacing 5
+      [ Element.alignTop
+      , Element.spacing 4
+      ]
+      [ Input.button
+        [ Element.width Element.fill
+        , Font.color (Element.rgb255 251 250 245)
+        , Background.color (Element.rgb255 0 110 84)
+        , Element.padding 10
         ]
-        [ Input.button
-            [ Element.width Element.fill
-            , Font.color (Element.rgb255 251 250 245)
-            , Background.color (Element.rgb255 0 110 84)
-            , Element.padding 10
-            ]
-            { onPress = Just buttonMsg1, label = Element.text buttonLabel1 }
-        , Input.button
-            [ Element.width Element.fill
-            , Font.color (Element.rgb255 251 250 245)
-            , Background.color (Element.rgb255 0 110 84)
-            , Element.padding 10
-            ]
-            { onPress = Just buttonMsg2, label = Element.text buttonLabel2 }
+        { onPress = Just buttonMsg1, label = Element.text buttonLabel1 }
+      , Input.button
+        [ Element.width Element.fill , Font.color (Element.rgb255 251 250 245)
+        , Background.color (Element.rgb255 0 110 84)
+        , Element.padding 10
         ]
+        { onPress = Just buttonMsg2, label = Element.text buttonLabel2 }
+      ]
     ]
+
 vertexControlElement : String -> String -> String -> Msg -> String -> Msg -> String -> Element.Element Msg
 vertexControlElement filePath description value buttonMsg1 buttonLabel1 buttonMsg2 buttonLabel2 =
   Element.row
@@ -186,42 +186,42 @@ vertexControlElement filePath description value buttonMsg1 buttonLabel1 buttonMs
     , Element.spacing 5
     ]
     [ Element.column
-        []
-        [ Element.image
-            [ Element.height <| Element.px <| 64
-            , Element.width <| Element.px <| 64
-            , Element.htmlAttribute (style "image-rendering" "pixelated")
-            ]
-            { src = filePath
-            , description = description
-            }
-        , Element.el
-            [ Element.width Element.fill
-            , Element.centerX
-            , Font.color (Element.rgb255 251 250 245)
-            , Background.color (Element.rgb255 0 110 84)
-            ]
-            (Element.text value)
+      []
+      [ Element.image
+        [ Element.height <| Element.px <| 64
+        , Element.width <| Element.px <| 64
+        , Element.htmlAttribute (style "image-rendering" "pixelated")
         ]
+        { src = filePath
+        , description = description
+        }
+      , Element.el
+        [ Element.width Element.fill
+        , Element.centerX
+        , Font.color (Element.rgb255 251 250 245)
+        , Background.color (Element.rgb255 0 110 84)
+        ]
+        (Element.text value)
+      ]
     , Element.column
-        [ Element.alignTop
-        , Element.spacing 5
+      [ Element.alignTop
+      , Element.spacing 4
+      ]
+      [ Input.button
+        [ Element.width Element.fill
+        , Font.color (Element.rgb255 251 250 245)
+        , Background.color (Element.rgb255 0 110 84)
+        , Element.padding 10
         ]
-        [ Input.button
-            [ Element.width Element.fill
-            , Font.color (Element.rgb255 251 250 245)
-            , Background.color (Element.rgb255 0 110 84)
-            , Element.padding 10
-            ]
-            { onPress = Just buttonMsg1, label = Element.text buttonLabel1 }
-        , Input.button
-            [ Element.width Element.fill
-            , Font.color (Element.rgb255 251 250 245)
-            , Background.color (Element.rgb255 0 110 84)
-            , Element.padding 10
-            ]
-            { onPress = Just buttonMsg2, label = Element.text buttonLabel2 }
+        { onPress = Just buttonMsg1, label = Element.text buttonLabel1 }
+      , Input.button
+        [ Element.width Element.fill
+        , Font.color (Element.rgb255 251 250 245)
+        , Background.color (Element.rgb255 0 110 84)
+        , Element.padding 10
         ]
+        { onPress = Just buttonMsg2, label = Element.text buttonLabel2 }
+      ]
     ]
 
 view : Model -> Html Msg
@@ -234,29 +234,58 @@ view model =
         (sphere model.color (toFloat model.radius) model.divLongitude model.divLatitude)
   in
     div
-      [ style "text-align" "center" ]
+      [ style "text-align" "center"
+      , style "margin-bottom" "84px"]
       [ WebGL.toHtml
-          [ width 400
-          , height 400
-          , style "display" "block"
-          ]
-          [ base (uniforms (centerPosition 10.0 model.time 0) model.time)
-          , base (uniforms (centerPosition 10.0 model.time 90.0) model.time)
-          , base (uniforms (centerPosition 10.0 model.time 180.0) model.time)
-          , base (uniforms (centerPosition 10.0 model.time 270.0) model.time)
-          ]
+        [ width 400
+        , height 400
+        , style "display" "block"
+        ]
+        [ base (uniforms (centerPosition 10.0 model.time 0) model.time)
+        , base (uniforms (centerPosition 10.0 model.time 90.0) model.time)
+        , base (uniforms (centerPosition 10.0 model.time 180.0) model.time)
+        , base (uniforms (centerPosition 10.0 model.time 270.0) model.time)
+        ]
       , Element.layout
-          []
-          (Element.row
-            [ Element.alignTop
-            , Element.spacing 20
-            ]
-            [ (colorControlElement "img/color.png" "Color" "Color" Marble "Marble" Gradation "Gradation")
-            , (vertexControlElement "img/radius.png" "Radius" (zeroPadding model.radius) IncreaseRadius "↑" DecreaseRadius "↓")
-            , (vertexControlElement "img/div_longitude.png" "DivLongitude" (zeroPadding model.divLongitude) IncreaseDivLongitude "↑" DecreaseDivLongitude "↓")
-            , (vertexControlElement "img/div_latitude.png" "DivLatitude" (zeroPadding model.divLatitude) IncreaseDivLatitude "↑" DecreaseDivLatitude "↓")
-            ]
-          )
+        []
+        (Element.row
+          [ Element.alignTop
+          , Element.spacing 20
+          ]
+          [ colorControlElement
+              "img/color.png"
+              "Color"
+              "Color"
+              Marble
+              "Marble"
+              Gradation
+              "Gradation"
+          , vertexControlElement
+              "img/radius.png"
+              "Radius"
+              (zeroPadding model.radius)
+              IncreaseRadius
+              "↑"
+              DecreaseRadius
+              "↓"
+          , vertexControlElement
+              "img/div_longitude.png"
+              "DivLongitude"
+              (zeroPadding model.divLongitude)
+              IncreaseDivLongitude
+              "↑"
+              DecreaseDivLongitude
+              "↓"
+          , vertexControlElement
+              "img/div_latitude.png"
+              "DivLatitude"
+              (zeroPadding model.divLatitude)
+              IncreaseDivLatitude
+              "↑"
+              DecreaseDivLatitude
+              "↓"
+          ]
+        )
       ]
 
 
