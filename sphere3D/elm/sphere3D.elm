@@ -50,7 +50,7 @@ init : () -> ( Model, Cmd Msg )
 init _ =
   ( { time = 0
     , color = marble
-    , radius = 5
+    , radius = 13
     , divLongitude = 12
     , divLatitude = 6
     }
@@ -84,7 +84,7 @@ update msg model =
       ( { model | radius = decrease 1 model.radius }, Cmd.none )
 
     IncreaseRadius ->
-      ( { model | radius = increase 7 model.radius }, Cmd.none )
+      ( { model | radius = increase 13 model.radius }, Cmd.none )
 
     DecreaseDivLongitude ->
       ( { model | divLongitude = decrease 3 model.divLongitude }, Cmd.none )
@@ -116,7 +116,7 @@ centerPosition radius theta phi =
   vec3
     (radius * (cos <| degrees phi + theta))
     (radius * (sin <| degrees phi + theta))
-    0
+    (2.0 * radius * (sin <| degrees phi + theta) * (cos <| degrees phi + theta) + 40.0)
 
 zeroPadding : Int -> String
 zeroPadding number =
@@ -139,7 +139,7 @@ colorControlElement filePath description value buttonMsg1 buttonLabel1 buttonMsg
     , Element.spacing 5
     ]
     [ Element.column
-      []
+      [ Background.color (Element.rgb255 0 110 84) ]
       [ Element.image
         [ Element.height Element.fill
         , Element.alignTop
@@ -186,7 +186,7 @@ vertexControlElement filePath description value buttonMsg1 buttonLabel1 buttonMs
     , Element.spacing 5
     ]
     [ Element.column
-      []
+      [ Background.color (Element.rgb255 0 110 84) ]
       [ Element.image
         [ Element.height <| Element.px <| 64
         , Element.width <| Element.px <| 64
@@ -233,60 +233,61 @@ view model =
         fragmentShader
         (sphere model.color (toFloat model.radius) model.divLongitude model.divLatitude)
   in
-    div
-      [ style "text-align" "center"
-      , style "margin-bottom" "84px"]
-      [ WebGL.toHtml
-        [ width 400
-        , height 400
-        , style "display" "block"
+    Element.layout
+      [ Element.htmlAttribute (style "margin-bottom" "84px") ]
+      (Element.column
+        [ Element.htmlAttribute (style "text-align" "center")]
+        [ Element.html
+            (WebGL.toHtml
+                [ width 400
+                , height 400
+                , style "margin" "auto"
+                ]
+                [ base (uniforms (centerPosition 20.0 model.time 0) model.time)
+                , base (uniforms (centerPosition 20.0 model.time 90.0) model.time)
+                , base (uniforms (centerPosition 20.0 model.time 180.0) model.time)
+                , base (uniforms (centerPosition 20.0 model.time 270.0) model.time)
+                ]
+            )
+        , Element.row
+            [ Element.alignTop
+            , Element.spacing 20
+            ]
+            [ colorControlElement
+                "img/color.png"
+                "Color"
+                "Color"
+                Marble
+                "Marble"
+                Gradation
+                "Gradation"
+            , vertexControlElement
+                "img/radius.png"
+                "Radius"
+                (zeroPadding model.radius)
+                IncreaseRadius
+                "↑"
+                DecreaseRadius
+                "↓"
+            , vertexControlElement
+                "img/div_longitude.png"
+                "DivLongitude"
+                (zeroPadding model.divLongitude)
+                IncreaseDivLongitude
+                "↑"
+                DecreaseDivLongitude
+                "↓"
+            , vertexControlElement
+                "img/div_latitude.png"
+                "DivLatitude"
+                (zeroPadding model.divLatitude)
+                IncreaseDivLatitude
+                "↑"
+                DecreaseDivLatitude
+                "↓"
+            ]
         ]
-        [ base (uniforms (centerPosition 10.0 model.time 0) model.time)
-        , base (uniforms (centerPosition 10.0 model.time 90.0) model.time)
-        , base (uniforms (centerPosition 10.0 model.time 180.0) model.time)
-        , base (uniforms (centerPosition 10.0 model.time 270.0) model.time)
-        ]
-      , Element.layout
-        []
-        (Element.row
-          [ Element.alignTop
-          , Element.spacing 20
-          ]
-          [ colorControlElement
-              "img/color.png"
-              "Color"
-              "Color"
-              Marble
-              "Marble"
-              Gradation
-              "Gradation"
-          , vertexControlElement
-              "img/radius.png"
-              "Radius"
-              (zeroPadding model.radius)
-              IncreaseRadius
-              "↑"
-              DecreaseRadius
-              "↓"
-          , vertexControlElement
-              "img/div_longitude.png"
-              "DivLongitude"
-              (zeroPadding model.divLongitude)
-              IncreaseDivLongitude
-              "↑"
-              DecreaseDivLongitude
-              "↓"
-          , vertexControlElement
-              "img/div_latitude.png"
-              "DivLatitude"
-              (zeroPadding model.divLatitude)
-              IncreaseDivLatitude
-              "↑"
-              DecreaseDivLatitude
-              "↓"
-          ]
-        )
-      ]
+      )
 
 
 -- UNIFORMS
@@ -305,8 +306,8 @@ uniforms origin theta =
         (Mat4.makeRotate (3 * theta) (vec3 0 0 1))
         (Mat4.makeRotate (4 * theta) (vec3 1 0 0))
           |> Mat4.mulAffine (Mat4.makeTranslate origin)
-  , perspective = Mat4.makePerspective 45 1 10.0 100
-  , camera = Mat4.makeLookAt (vec3 0 0 50) (vec3 0 0 0) (vec3 0 1 0)
+  , perspective = Mat4.makePerspective 45 1 10.0 200
+  , camera = Mat4.makeLookAt (vec3 -20 0 150) (vec3 0 0 0) (vec3 0 1 0)
   , shade = 0.8
   }
 

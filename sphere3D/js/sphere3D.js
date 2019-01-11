@@ -6491,7 +6491,7 @@ var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$init = function (_n0) {
 	return _Utils_Tuple2(
-		{Y: author$project$Main$marble, E: 6, F: 12, K: 5, h: 0},
+		{Y: author$project$Main$marble, E: 6, F: 12, K: 13, h: 0},
 		elm$core$Platform$Cmd$none);
 };
 var author$project$Main$Delta = function (a) {
@@ -7018,7 +7018,7 @@ var author$project$Main$update = F2(
 					_Utils_update(
 						model,
 						{
-							K: A2(author$project$Main$increase, 7, model.K)
+							K: A2(author$project$Main$increase, 13, model.K)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 7:
@@ -7071,7 +7071,9 @@ var author$project$Main$centerPosition = F3(
 				elm$core$Basics$degrees(phi) + theta),
 			radius * elm$core$Basics$sin(
 				elm$core$Basics$degrees(phi) + theta),
-			0);
+			(((2.0 * radius) * elm$core$Basics$sin(
+				elm$core$Basics$degrees(phi) + theta)) * elm$core$Basics$cos(
+				elm$core$Basics$degrees(phi) + theta)) + 40.0);
 	});
 var elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
 var elm$html$Html$Attributes$style = elm$virtual_dom$VirtualDom$style;
@@ -12768,7 +12770,11 @@ var author$project$Main$colorControlElement = F7(
 				[
 					A2(
 					mdgriffith$elm_ui$Element$column,
-					_List_Nil,
+					_List_fromArray(
+						[
+							mdgriffith$elm_ui$Element$Background$color(
+							A3(mdgriffith$elm_ui$Element$rgb255, 0, 110, 84))
+						]),
 					_List_fromArray(
 						[
 							A2(
@@ -12995,10 +13001,10 @@ var author$project$Main$uniforms = F2(
 		return {
 			bk: A3(
 				elm_explorations$linear_algebra$Math$Matrix4$makeLookAt,
-				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 50),
+				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, -20, 0, 150),
 				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 0),
 				A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 1, 0)),
-			b$: A4(elm_explorations$linear_algebra$Math$Matrix4$makePerspective, 45, 1, 10.0, 100),
+			b$: A4(elm_explorations$linear_algebra$Math$Matrix4$makePerspective, 45, 1, 10.0, 200),
 			b9: A2(
 				elm_explorations$linear_algebra$Math$Matrix4$mulAffine,
 				elm_explorations$linear_algebra$Math$Matrix4$makeTranslate(origin),
@@ -13029,7 +13035,11 @@ var author$project$Main$vertexControlElement = F7(
 				[
 					A2(
 					mdgriffith$elm_ui$Element$column,
-					_List_Nil,
+					_List_fromArray(
+						[
+							mdgriffith$elm_ui$Element$Background$color(
+							A3(mdgriffith$elm_ui$Element$rgb255, 0, 110, 84))
+						]),
 					_List_fromArray(
 						[
 							A2(
@@ -13222,6 +13232,12 @@ var elm_explorations$webgl$WebGL$toHtml = elm_explorations$webgl$WebGL$toHtmlWit
 			elm_explorations$webgl$WebGL$antialias,
 			elm_explorations$webgl$WebGL$depth(1)
 		]));
+var elm$core$Basics$always = F2(
+	function (a, _n0) {
+		return a;
+	});
+var mdgriffith$elm_ui$Internal$Model$unstyled = A2(elm$core$Basics$composeL, mdgriffith$elm_ui$Internal$Model$Unstyled, elm$core$Basics$always);
+var mdgriffith$elm_ui$Element$html = mdgriffith$elm_ui$Internal$Model$unstyled;
 var mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
 		return {$: 2, a: a, b: b};
@@ -13485,49 +13501,54 @@ var author$project$Main$view = function (model) {
 		author$project$Main$fragmentShader,
 		A4(author$project$Main$sphere, model.Y, model.K, model.F, model.E));
 	return A2(
-		elm$html$Html$div,
+		mdgriffith$elm_ui$Element$layout,
 		_List_fromArray(
 			[
-				A2(elm$html$Html$Attributes$style, 'text-align', 'center'),
-				A2(elm$html$Html$Attributes$style, 'margin-bottom', '84px')
+				mdgriffith$elm_ui$Element$htmlAttribute(
+				A2(elm$html$Html$Attributes$style, 'margin-bottom', '84px'))
 			]),
-		_List_fromArray(
-			[
-				A2(
-				elm_explorations$webgl$WebGL$toHtml,
-				_List_fromArray(
-					[
-						elm$html$Html$Attributes$width(400),
-						elm$html$Html$Attributes$height(400),
-						A2(elm$html$Html$Attributes$style, 'display', 'block')
-					]),
-				_List_fromArray(
-					[
-						base(
-						A2(
-							author$project$Main$uniforms,
-							A3(author$project$Main$centerPosition, 10.0, model.h, 0),
-							model.h)),
-						base(
-						A2(
-							author$project$Main$uniforms,
-							A3(author$project$Main$centerPosition, 10.0, model.h, 90.0),
-							model.h)),
-						base(
-						A2(
-							author$project$Main$uniforms,
-							A3(author$project$Main$centerPosition, 10.0, model.h, 180.0),
-							model.h)),
-						base(
-						A2(
-							author$project$Main$uniforms,
-							A3(author$project$Main$centerPosition, 10.0, model.h, 270.0),
-							model.h))
-					])),
-				A2(
-				mdgriffith$elm_ui$Element$layout,
-				_List_Nil,
-				A2(
+		A2(
+			mdgriffith$elm_ui$Element$column,
+			_List_fromArray(
+				[
+					mdgriffith$elm_ui$Element$htmlAttribute(
+					A2(elm$html$Html$Attributes$style, 'text-align', 'center'))
+				]),
+			_List_fromArray(
+				[
+					mdgriffith$elm_ui$Element$html(
+					A2(
+						elm_explorations$webgl$WebGL$toHtml,
+						_List_fromArray(
+							[
+								elm$html$Html$Attributes$width(400),
+								elm$html$Html$Attributes$height(400),
+								A2(elm$html$Html$Attributes$style, 'margin', 'auto')
+							]),
+						_List_fromArray(
+							[
+								base(
+								A2(
+									author$project$Main$uniforms,
+									A3(author$project$Main$centerPosition, 20.0, model.h, 0),
+									model.h)),
+								base(
+								A2(
+									author$project$Main$uniforms,
+									A3(author$project$Main$centerPosition, 20.0, model.h, 90.0),
+									model.h)),
+								base(
+								A2(
+									author$project$Main$uniforms,
+									A3(author$project$Main$centerPosition, 20.0, model.h, 180.0),
+									model.h)),
+								base(
+								A2(
+									author$project$Main$uniforms,
+									A3(author$project$Main$centerPosition, 20.0, model.h, 270.0),
+									model.h))
+							]))),
+					A2(
 					mdgriffith$elm_ui$Element$row,
 					_List_fromArray(
 						[
@@ -13564,8 +13585,8 @@ var author$project$Main$view = function (model) {
 							'↑',
 							author$project$Main$DecreaseDivLatitude,
 							'↓')
-						])))
-			]));
+						]))
+				])));
 };
 var elm$browser$Browser$element = _Browser_element;
 var author$project$Main$main = elm$browser$Browser$element(
