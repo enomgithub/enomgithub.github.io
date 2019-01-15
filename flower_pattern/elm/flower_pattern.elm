@@ -1,5 +1,6 @@
 import Browser
-import Browser.Events exposing (onAnimationFrameDelta, onMouseMove)
+import Browser.Dom as Dom
+import Browser.Events exposing (onAnimationFrameDelta, onResize)
 import Element
 import Element.Background as Background
 import Element.Border as Border
@@ -10,13 +11,14 @@ import Html.Attributes as Attributes
 import Math.Matrix4 as Mat4 exposing (Mat4)
 import Math.Vector2 as Vec2 exposing (vec2, Vec2)
 import Math.Vector3 as Vec3 exposing (vec3, Vec3)
+import Task
 import WebGL exposing (Mesh, Shader)
 
 
 -- MAIN
 main : Program () Model Msg
 main =
-  Browser.element
+  Browser.document
     { init = init
     , subscriptions = subscriptions
     , update = update
@@ -41,8 +43,10 @@ init _ =
     , frequency = vec3 20.0 20.0 20.0
     , time = 0
     , color =  vec3 0 0 0
+    , width = 600
+    , height = 600
     }
-  , Cmd.none
+  , Task.perform GetViewport Dom.getViewport
   )
 
 type alias Model =
@@ -54,6 +58,8 @@ type alias Model =
   , frequency : Vec3
   , time : Float
   , color : Vec3
+  , width : Int
+  , height : Int
   }
 
 type alias Footer =
@@ -69,11 +75,11 @@ type alias Resolution =
 
 -- SUBSCRIPTIONS
 subscriptions : Model -> Sub Msg
-subscriptions model =
-  let
-   dt = model.time
-  in
-    onAnimationFrameDelta (\t -> Delta t)
+subscriptions _ =
+  Sub.batch
+    [ onAnimationFrameDelta Delta
+    , onResize SetWindowSize
+    ]
 
 
 -- UPDATE
@@ -110,6 +116,12 @@ update msg model =
     FrequencyZChanged frequencyZ ->
       ( { model | frequency = Vec3.setZ frequencyZ model.frequency }, Cmd.none)
 
+    SetWindowSize width height ->
+      ( { model | width = width, height = height }, Cmd.none )
+
+    GetViewport viewport ->
+      ( { model | width = round viewport.viewport.width, height = round viewport.viewport.height }, Cmd.none )
+
 type Msg
   = Delta Float
   | AmplitudeXChanged Float
@@ -121,20 +133,32 @@ type Msg
   | FrequencyXChanged Float
   | FrequencyYChanged Float
   | FrequencyZChanged Float
+  | SetWindowSize Int Int
+  | GetViewport Dom.Viewport
 
 
 -- VIEW
-view : Model -> Html Msg
+view : Model -> Browser.Document Msg
 view model =
-  Element.layout
-    [ Element.width Element.fill ]
-    ( Element.column
-        []
-        [ header model
-        , contents model
-        , footer model
-        ]
-    )
+  { title = "Flower Pattern"
+  , body =
+      [ Element.layout
+          []
+          ( Element.column
+              [ Element.width <| Element.px <| model.width
+              , Element.centerX
+              , Font.family
+                  [ Font.typeface "Arial"
+                  , Font.sansSerif
+                  ]
+              ]
+              [ header model
+              , contents model
+              , footer model
+              ]
+          )
+      ]
+  }
 
 header : Model -> Element.Element Msg
 header model =
@@ -142,6 +166,7 @@ header model =
     [ Element.height <| Element.px <| 80
     , Element.width Element.fill
     , Element.paddingEach { top = 0, right = 0, bottom = 0, left = 10 }
+    , Font.size 32
     , Font.color <| Element.rgb255 251 250 245
     , Background.color <| Element.rgb255 0 110 84
     ]
@@ -153,7 +178,9 @@ header model =
 contents : Model -> Element.Element Msg
 contents model =
   Element.column
-    []
+    [ Element.paddingEach { top =0, right = 0, bottom = 80, left = 0 }
+    , Element.htmlAttribute (Attributes.style "margin" "auto")
+    ]
     [ Element.html
         ( WebGL.toHtml
             [ Attributes.height model.resolution.height
@@ -322,9 +349,13 @@ footer model =
     , Element.paddingEach { top = 0, right = 0, bottom = 0, left = 10 }
     , Font.color <| Element.rgb255 251 250 245
     , Background.color <| Element.rgb255 0 110 84
+    , Element.htmlAttribute (Attributes.style "position" "fixed")
+    , Element.htmlAttribute (Attributes.style "bottom" "0")
     ]
     ( Element.link
-        [ Element.centerY ]
+        [ Element.centerY
+        , Font.size 32
+        ]
         { url = model.footer.url, label = Element.text model.footer.label} )
 
 vertexShader : Shader Vertex Uniforms {}
