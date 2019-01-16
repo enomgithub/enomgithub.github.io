@@ -89,32 +89,32 @@ update msg model =
     Delta dt ->
       ( { model | time = model.time + dt / 1000 }, Cmd.none )
 
-    AmplitudeXChanged ampX ->
-      ( { model | amplitude = Vec3.setX ampX model.amplitude }, Cmd.none )
+    AmplitudeRChanged ampR ->
+      ( { model | amplitude = Vec3.setX ampR model.amplitude }, Cmd.none )
 
-    AmplitudeYChanged ampY ->
-      ( { model | amplitude = Vec3.setY ampY model.amplitude }, Cmd.none )
+    AmplitudeGChanged ampG ->
+      ( { model | amplitude = Vec3.setY ampG model.amplitude }, Cmd.none )
 
-    AmplitudeZChanged ampZ ->
-      ( { model | amplitude = Vec3.setZ ampZ model.amplitude }, Cmd.none )
+    AmplitudeBChanged ampB ->
+      ( { model | amplitude = Vec3.setZ ampB model.amplitude }, Cmd.none )
 
-    PhaseXChanged phaseX ->
-      ( { model | phase = Vec3.setX phaseX model.phase }, Cmd.none)
+    PhaseRChanged phaseR ->
+      ( { model | phase = Vec3.setX phaseR model.phase }, Cmd.none)
 
-    PhaseYChanged phaseY ->
-      ( { model | phase = Vec3.setY phaseY model.phase }, Cmd.none)
+    PhaseGChanged phaseG ->
+      ( { model | phase = Vec3.setY phaseG model.phase }, Cmd.none)
 
-    PhaseZChanged phaseZ ->
-      ( { model | phase = Vec3.setZ phaseZ model.phase }, Cmd.none)
+    PhaseBChanged phaseB ->
+      ( { model | phase = Vec3.setZ phaseB model.phase }, Cmd.none)
 
-    FrequencyXChanged frequencyX ->
-      ( { model | frequency = Vec3.setX frequencyX model.frequency }, Cmd.none)
+    FrequencyRChanged frequencyR ->
+      ( { model | frequency = Vec3.setX frequencyR model.frequency }, Cmd.none)
 
-    FrequencyYChanged frequencyY ->
-      ( { model | frequency = Vec3.setY frequencyY model.frequency }, Cmd.none)
+    FrequencyGChanged frequencyG ->
+      ( { model | frequency = Vec3.setY frequencyG model.frequency }, Cmd.none)
 
-    FrequencyZChanged frequencyZ ->
-      ( { model | frequency = Vec3.setZ frequencyZ model.frequency }, Cmd.none)
+    FrequencyBChanged frequencyB ->
+      ( { model | frequency = Vec3.setZ frequencyB model.frequency }, Cmd.none)
 
     SetWindowSize width height ->
       ( { model | width = width, height = height }, Cmd.none )
@@ -124,15 +124,15 @@ update msg model =
 
 type Msg
   = Delta Float
-  | AmplitudeXChanged Float
-  | AmplitudeYChanged Float
-  | AmplitudeZChanged Float
-  | PhaseXChanged Float
-  | PhaseYChanged Float
-  | PhaseZChanged Float
-  | FrequencyXChanged Float
-  | FrequencyYChanged Float
-  | FrequencyZChanged Float
+  | AmplitudeRChanged Float
+  | AmplitudeGChanged Float
+  | AmplitudeBChanged Float
+  | PhaseRChanged Float
+  | PhaseGChanged Float
+  | PhaseBChanged Float
+  | FrequencyRChanged Float
+  | FrequencyGChanged Float
+  | FrequencyBChanged Float
   | SetWindowSize Int Int
   | GetViewport Dom.Viewport
 
@@ -204,9 +204,9 @@ contents model =
     , Element.row
         []
         [ controler
-            AmplitudeXChanged
-            PhaseXChanged
-            FrequencyXChanged
+            AmplitudeRChanged
+            PhaseRChanged
+            FrequencyRChanged
             "Red"
             ( Element.rgb255 251 250 245 )
             ( Element.rgb255 255 0 0 )
@@ -214,9 +214,9 @@ contents model =
             ( Vec3.getX model.phase )
             ( Vec3.getX model.frequency )
         , controler
-            AmplitudeYChanged
-            PhaseYChanged
-            FrequencyYChanged
+            AmplitudeGChanged
+            PhaseGChanged
+            FrequencyGChanged
             "Green"
             ( Element.rgb255 48 40 51 )
             ( Element.rgb255 0 255 0 )
@@ -224,9 +224,9 @@ contents model =
             ( Vec3.getY model.phase )
             ( Vec3.getY model.frequency )
         , controler
-            AmplitudeZChanged
-            PhaseZChanged
-            FrequencyZChanged
+            AmplitudeBChanged
+            PhaseBChanged
+            FrequencyBChanged
             "Blue"
             ( Element.rgb255 251 250 245 )
             ( Element.rgb255 0 0 255 )
