@@ -39,8 +39,8 @@ init _ =
         , width = 512
         }
     , amplitude = vec3 20.0 20.0 20.0
-    , phase = vec3 0 0.2 0.4
-    , frequency = vec3 20.0 20.0 20.0
+    , phase = vec3 0 5.0 10.0
+    , frequency = vec3 5.0 5.0 5.0
     , time = 0
     , color =  vec3 0 0 0
     , width = 600
@@ -89,32 +89,32 @@ update msg model =
     Delta dt ->
       ( { model | time = model.time + dt / 1000 }, Cmd.none )
 
-    AmplitudeXChanged ampX ->
-      ( { model | amplitude = Vec3.setX ampX model.amplitude }, Cmd.none )
+    AmplitudeRChanged ampR ->
+      ( { model | amplitude = Vec3.setX ampR model.amplitude }, Cmd.none )
 
-    AmplitudeYChanged ampY ->
-      ( { model | amplitude = Vec3.setY ampY model.amplitude }, Cmd.none )
+    AmplitudeGChanged ampG ->
+      ( { model | amplitude = Vec3.setY ampG model.amplitude }, Cmd.none )
 
-    AmplitudeZChanged ampZ ->
-      ( { model | amplitude = Vec3.setZ ampZ model.amplitude }, Cmd.none )
+    AmplitudeBChanged ampB ->
+      ( { model | amplitude = Vec3.setZ ampB model.amplitude }, Cmd.none )
 
-    PhaseXChanged phaseX ->
-      ( { model | phase = Vec3.setX phaseX model.phase }, Cmd.none)
+    PhaseRChanged phaseR ->
+      ( { model | phase = Vec3.setX phaseR model.phase }, Cmd.none)
 
-    PhaseYChanged phaseY ->
-      ( { model | phase = Vec3.setY phaseY model.phase }, Cmd.none)
+    PhaseGChanged phaseG ->
+      ( { model | phase = Vec3.setY phaseG model.phase }, Cmd.none)
 
-    PhaseZChanged phaseZ ->
-      ( { model | phase = Vec3.setZ phaseZ model.phase }, Cmd.none)
+    PhaseBChanged phaseB ->
+      ( { model | phase = Vec3.setZ phaseB model.phase }, Cmd.none)
 
-    FrequencyXChanged frequencyX ->
-      ( { model | frequency = Vec3.setX frequencyX model.frequency }, Cmd.none)
+    FrequencyRChanged frequencyR ->
+      ( { model | frequency = Vec3.setX frequencyR model.frequency }, Cmd.none)
 
-    FrequencyYChanged frequencyY ->
-      ( { model | frequency = Vec3.setY frequencyY model.frequency }, Cmd.none)
+    FrequencyGChanged frequencyG ->
+      ( { model | frequency = Vec3.setY frequencyG model.frequency }, Cmd.none)
 
-    FrequencyZChanged frequencyZ ->
-      ( { model | frequency = Vec3.setZ frequencyZ model.frequency }, Cmd.none)
+    FrequencyBChanged frequencyB ->
+      ( { model | frequency = Vec3.setZ frequencyB model.frequency }, Cmd.none)
 
     SetWindowSize width height ->
       ( { model | width = width, height = height }, Cmd.none )
@@ -124,15 +124,15 @@ update msg model =
 
 type Msg
   = Delta Float
-  | AmplitudeXChanged Float
-  | AmplitudeYChanged Float
-  | AmplitudeZChanged Float
-  | PhaseXChanged Float
-  | PhaseYChanged Float
-  | PhaseZChanged Float
-  | FrequencyXChanged Float
-  | FrequencyYChanged Float
-  | FrequencyZChanged Float
+  | AmplitudeRChanged Float
+  | AmplitudeGChanged Float
+  | AmplitudeBChanged Float
+  | PhaseRChanged Float
+  | PhaseGChanged Float
+  | PhaseBChanged Float
+  | FrequencyRChanged Float
+  | FrequencyGChanged Float
+  | FrequencyBChanged Float
   | SetWindowSize Int Int
   | GetViewport Dom.Viewport
 
@@ -204,9 +204,9 @@ contents model =
     , Element.row
         []
         [ controler
-            AmplitudeXChanged
-            PhaseXChanged
-            FrequencyXChanged
+            AmplitudeRChanged
+            PhaseRChanged
+            FrequencyRChanged
             "Red"
             ( Element.rgb255 251 250 245 )
             ( Element.rgb255 255 0 0 )
@@ -214,9 +214,9 @@ contents model =
             ( Vec3.getX model.phase )
             ( Vec3.getX model.frequency )
         , controler
-            AmplitudeYChanged
-            PhaseYChanged
-            FrequencyYChanged
+            AmplitudeGChanged
+            PhaseGChanged
+            FrequencyGChanged
             "Green"
             ( Element.rgb255 48 40 51 )
             ( Element.rgb255 0 255 0 )
@@ -224,9 +224,9 @@ contents model =
             ( Vec3.getY model.phase )
             ( Vec3.getY model.frequency )
         , controler
-            AmplitudeZChanged
-            PhaseZChanged
-            FrequencyZChanged
+            AmplitudeBChanged
+            PhaseBChanged
+            FrequencyBChanged
             "Blue"
             ( Element.rgb255 251 250 245 )
             ( Element.rgb255 0 0 255 )
@@ -304,7 +304,7 @@ controler msgAmplitude msgPhase msgFrequency colorLabel fontColor bgColor amplit
             ]
             { label = Input.labelAbove [] (Element.text <| "Amplitude: " ++ String.fromFloat amplitude)
             , max = 40.0
-            , min = 10.0
+            , min = 1.0
             , onChange = msgAmplitude
             , step = Just 1.0
             , thumb = Input.defaultThumb
@@ -317,10 +317,10 @@ controler msgAmplitude msgPhase msgFrequency colorLabel fontColor bgColor amplit
             , Border.rounded 2
             ]
             { label = Input.labelAbove [] (Element.text <| "Phase: " ++ String.fromFloat phase)
-            , max = 2.0
+            , max = 30.0
             , min = 0.0
             , onChange = msgPhase
-            , step = Just 0.1
+            , step = Just 1.0
             , thumb = Input.defaultThumb
             , value = phase
             }
@@ -332,7 +332,7 @@ controler msgAmplitude msgPhase msgFrequency colorLabel fontColor bgColor amplit
             ]
             { label = Input.labelAbove [] (Element.text <| "Frequency: " ++ String.fromFloat frequency)
             , max = 30.0
-            , min = 10.0
+            , min = 3.0
             , onChange = msgFrequency
             , step = Just 1.0
             , thumb = Input.defaultThumb
@@ -378,9 +378,9 @@ fragmentShader =
     uniform float time;
     void main () {
       vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
-      float r = 0.01 / abs(0.5 + amplitude.x * sin((atan(p.y, p.x) + (time + phase.x) * 0.5) * frequency.x) * 0.01 - length(p));
-      float g = 0.01 / abs(0.5 + amplitude.y * sin((atan(p.y, p.x) + (time + phase.y) * 0.5) * frequency.y) * 0.01 - length(p));
-      float b = 0.01 / abs(0.5 + amplitude.z * sin((atan(p.y, p.x) + (time + phase.z) * 0.5) * frequency.z) * 0.01 - length(p));
+      float r = 0.01 / abs(0.5 + amplitude.x * sin((atan(p.y, p.x) + (time + phase.x) * 0.1) * frequency.x) * 0.01 - length(p));
+      float g = 0.01 / abs(0.5 + amplitude.y * sin((atan(p.y, p.x) + (time + phase.y) * 0.1) * frequency.y) * 0.01 - length(p));
+      float b = 0.01 / abs(0.5 + amplitude.z * sin((atan(p.y, p.x) + (time + phase.z) * 0.1) * frequency.z) * 0.01 - length(p));
       gl_FragColor = vec4(vec3(r, g, b), 1.0);
     }
   |]

@@ -6804,10 +6804,10 @@ var author$project$Main$init = function (_n0) {
 			e: A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 20.0, 20.0, 20.0),
 			bu: A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0, 0),
 			aE: {R: 'back >', aQ: '../index.html'},
-			f: A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 20.0, 20.0, 20.0),
+			f: A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 5.0, 5.0, 5.0),
 			a0: 'Flower Pattern',
 			y: 600,
-			h: A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 0.2, 0.4),
+			h: A3(elm_explorations$linear_algebra$Math$Vector3$vec3, 0, 5.0, 10.0),
 			K: {y: 512, t: 512},
 			W: 0,
 			t: 600
@@ -7393,84 +7393,84 @@ var author$project$Main$update = F2(
 						{W: model.W + (dt / 1000)}),
 					elm$core$Platform$Cmd$none);
 			case 1:
-				var ampX = msg.a;
+				var ampR = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							e: A2(elm_explorations$linear_algebra$Math$Vector3$setX, ampX, model.e)
+							e: A2(elm_explorations$linear_algebra$Math$Vector3$setX, ampR, model.e)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 2:
-				var ampY = msg.a;
+				var ampG = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							e: A2(elm_explorations$linear_algebra$Math$Vector3$setY, ampY, model.e)
+							e: A2(elm_explorations$linear_algebra$Math$Vector3$setY, ampG, model.e)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 3:
-				var ampZ = msg.a;
+				var ampB = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							e: A2(elm_explorations$linear_algebra$Math$Vector3$setZ, ampZ, model.e)
+							e: A2(elm_explorations$linear_algebra$Math$Vector3$setZ, ampB, model.e)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 4:
-				var phaseX = msg.a;
+				var phaseR = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							h: A2(elm_explorations$linear_algebra$Math$Vector3$setX, phaseX, model.h)
+							h: A2(elm_explorations$linear_algebra$Math$Vector3$setX, phaseR, model.h)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 5:
-				var phaseY = msg.a;
+				var phaseG = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							h: A2(elm_explorations$linear_algebra$Math$Vector3$setY, phaseY, model.h)
+							h: A2(elm_explorations$linear_algebra$Math$Vector3$setY, phaseG, model.h)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 6:
-				var phaseZ = msg.a;
+				var phaseB = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							h: A2(elm_explorations$linear_algebra$Math$Vector3$setZ, phaseZ, model.h)
+							h: A2(elm_explorations$linear_algebra$Math$Vector3$setZ, phaseB, model.h)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 7:
-				var frequencyX = msg.a;
+				var frequencyR = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							f: A2(elm_explorations$linear_algebra$Math$Vector3$setX, frequencyX, model.f)
+							f: A2(elm_explorations$linear_algebra$Math$Vector3$setX, frequencyR, model.f)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 8:
-				var frequencyY = msg.a;
+				var frequencyG = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							f: A2(elm_explorations$linear_algebra$Math$Vector3$setY, frequencyY, model.f)
+							f: A2(elm_explorations$linear_algebra$Math$Vector3$setY, frequencyG, model.f)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 9:
-				var frequencyZ = msg.a;
+				var frequencyB = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							f: A2(elm_explorations$linear_algebra$Math$Vector3$setZ, frequencyZ, model.f)
+							f: A2(elm_explorations$linear_algebra$Math$Vector3$setZ, frequencyB, model.f)
 						}),
 					elm$core$Platform$Cmd$none);
 			case 10:
@@ -7493,32 +7493,32 @@ var author$project$Main$update = F2(
 					elm$core$Platform$Cmd$none);
 		}
 	});
-var author$project$Main$AmplitudeXChanged = function (a) {
-	return {$: 1, a: a};
-};
-var author$project$Main$AmplitudeYChanged = function (a) {
-	return {$: 2, a: a};
-};
-var author$project$Main$AmplitudeZChanged = function (a) {
+var author$project$Main$AmplitudeBChanged = function (a) {
 	return {$: 3, a: a};
 };
-var author$project$Main$FrequencyXChanged = function (a) {
-	return {$: 7, a: a};
+var author$project$Main$AmplitudeGChanged = function (a) {
+	return {$: 2, a: a};
 };
-var author$project$Main$FrequencyYChanged = function (a) {
-	return {$: 8, a: a};
+var author$project$Main$AmplitudeRChanged = function (a) {
+	return {$: 1, a: a};
 };
-var author$project$Main$FrequencyZChanged = function (a) {
+var author$project$Main$FrequencyBChanged = function (a) {
 	return {$: 9, a: a};
 };
-var author$project$Main$PhaseXChanged = function (a) {
-	return {$: 4, a: a};
+var author$project$Main$FrequencyGChanged = function (a) {
+	return {$: 8, a: a};
 };
-var author$project$Main$PhaseYChanged = function (a) {
+var author$project$Main$FrequencyRChanged = function (a) {
+	return {$: 7, a: a};
+};
+var author$project$Main$PhaseBChanged = function (a) {
+	return {$: 6, a: a};
+};
+var author$project$Main$PhaseGChanged = function (a) {
 	return {$: 5, a: a};
 };
-var author$project$Main$PhaseZChanged = function (a) {
-	return {$: 6, a: a};
+var author$project$Main$PhaseRChanged = function (a) {
+	return {$: 4, a: a};
 };
 var elm$core$String$fromFloat = _String_fromNumber;
 var mdgriffith$elm_ui$Internal$Model$AlignX = function (a) {
@@ -13603,7 +13603,7 @@ var author$project$Main$controler = F9(
 									mdgriffith$elm_ui$Element$text(
 										'Amplitude: ' + elm$core$String$fromFloat(amplitude))),
 								a4: 40.0,
-								a6: 10.0,
+								a6: 1.0,
 								a8: msgAmplitude,
 								bf: elm$core$Maybe$Just(1.0),
 								bh: mdgriffith$elm_ui$Element$Input$defaultThumb,
@@ -13626,10 +13626,10 @@ var author$project$Main$controler = F9(
 									_List_Nil,
 									mdgriffith$elm_ui$Element$text(
 										'Phase: ' + elm$core$String$fromFloat(phase))),
-								a4: 2.0,
+								a4: 30.0,
 								a6: 0.0,
 								a8: msgPhase,
-								bf: elm$core$Maybe$Just(0.1),
+								bf: elm$core$Maybe$Just(1.0),
 								bh: mdgriffith$elm_ui$Element$Input$defaultThumb,
 								bj: phase
 							}),
@@ -13651,7 +13651,7 @@ var author$project$Main$controler = F9(
 									mdgriffith$elm_ui$Element$text(
 										'Frequency: ' + elm$core$String$fromFloat(frequency))),
 								a4: 30.0,
-								a6: 10.0,
+								a6: 3.0,
 								a8: msgFrequency,
 								bf: elm$core$Maybe$Just(1.0),
 								bh: mdgriffith$elm_ui$Element$Input$defaultThumb,
@@ -13661,7 +13661,7 @@ var author$project$Main$controler = F9(
 				]));
 	});
 var author$project$Main$fragmentShader = {
-	src: '\n    precision mediump float;\n    uniform vec2 resolution;\n    uniform vec3 amplitude;\n    uniform vec3 phase;\n    uniform vec3 frequency;\n    uniform float time;\n    void main () {\n      vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);\n      float r = 0.01 / abs(0.5 + amplitude.x * sin((atan(p.y, p.x) + (time + phase.x) * 0.5) * frequency.x) * 0.01 - length(p));\n      float g = 0.01 / abs(0.5 + amplitude.y * sin((atan(p.y, p.x) + (time + phase.y) * 0.5) * frequency.y) * 0.01 - length(p));\n      float b = 0.01 / abs(0.5 + amplitude.z * sin((atan(p.y, p.x) + (time + phase.z) * 0.5) * frequency.z) * 0.01 - length(p));\n      gl_FragColor = vec4(vec3(r, g, b), 1.0);\n    }\n  ',
+	src: '\n    precision mediump float;\n    uniform vec2 resolution;\n    uniform vec3 amplitude;\n    uniform vec3 phase;\n    uniform vec3 frequency;\n    uniform float time;\n    void main () {\n      vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);\n      float r = 0.01 / abs(0.5 + amplitude.x * sin((atan(p.y, p.x) + (time + phase.x) * 0.1) * frequency.x) * 0.01 - length(p));\n      float g = 0.01 / abs(0.5 + amplitude.y * sin((atan(p.y, p.x) + (time + phase.y) * 0.1) * frequency.y) * 0.01 - length(p));\n      float b = 0.01 / abs(0.5 + amplitude.z * sin((atan(p.y, p.x) + (time + phase.z) * 0.1) * frequency.z) * 0.01 - length(p));\n      gl_FragColor = vec4(vec3(r, g, b), 1.0);\n    }\n  ',
 	attributes: {},
 	uniforms: {amplitude: 'e', frequency: 'f', phase: 'h', resolution: 'K', time: 'W'}
 };
@@ -13893,9 +13893,9 @@ var author$project$Main$contents = function (model) {
 					[
 						A9(
 						author$project$Main$controler,
-						author$project$Main$AmplitudeXChanged,
-						author$project$Main$PhaseXChanged,
-						author$project$Main$FrequencyXChanged,
+						author$project$Main$AmplitudeRChanged,
+						author$project$Main$PhaseRChanged,
+						author$project$Main$FrequencyRChanged,
 						'Red',
 						A3(mdgriffith$elm_ui$Element$rgb255, 251, 250, 245),
 						A3(mdgriffith$elm_ui$Element$rgb255, 255, 0, 0),
@@ -13904,9 +13904,9 @@ var author$project$Main$contents = function (model) {
 						elm_explorations$linear_algebra$Math$Vector3$getX(model.f)),
 						A9(
 						author$project$Main$controler,
-						author$project$Main$AmplitudeYChanged,
-						author$project$Main$PhaseYChanged,
-						author$project$Main$FrequencyYChanged,
+						author$project$Main$AmplitudeGChanged,
+						author$project$Main$PhaseGChanged,
+						author$project$Main$FrequencyGChanged,
 						'Green',
 						A3(mdgriffith$elm_ui$Element$rgb255, 48, 40, 51),
 						A3(mdgriffith$elm_ui$Element$rgb255, 0, 255, 0),
@@ -13915,9 +13915,9 @@ var author$project$Main$contents = function (model) {
 						elm_explorations$linear_algebra$Math$Vector3$getY(model.f)),
 						A9(
 						author$project$Main$controler,
-						author$project$Main$AmplitudeZChanged,
-						author$project$Main$PhaseZChanged,
-						author$project$Main$FrequencyZChanged,
+						author$project$Main$AmplitudeBChanged,
+						author$project$Main$PhaseBChanged,
+						author$project$Main$FrequencyBChanged,
 						'Blue',
 						A3(mdgriffith$elm_ui$Element$rgb255, 251, 250, 245),
 						A3(mdgriffith$elm_ui$Element$rgb255, 0, 0, 255),
