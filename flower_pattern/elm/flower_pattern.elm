@@ -39,8 +39,8 @@ init _ =
         , width = 512
         }
     , amplitude = vec3 20.0 20.0 20.0
-    , phase = vec3 0 0.2 0.4
-    , frequency = vec3 20.0 20.0 20.0
+    , phase = vec3 0 5.0 10.0
+    , frequency = vec3 5.0 5.0 5.0
     , time = 0
     , color =  vec3 0 0 0
     , width = 600
@@ -304,7 +304,7 @@ controler msgAmplitude msgPhase msgFrequency colorLabel fontColor bgColor amplit
             ]
             { label = Input.labelAbove [] (Element.text <| "Amplitude: " ++ String.fromFloat amplitude)
             , max = 40.0
-            , min = 10.0
+            , min = 1.0
             , onChange = msgAmplitude
             , step = Just 1.0
             , thumb = Input.defaultThumb
@@ -317,10 +317,10 @@ controler msgAmplitude msgPhase msgFrequency colorLabel fontColor bgColor amplit
             , Border.rounded 2
             ]
             { label = Input.labelAbove [] (Element.text <| "Phase: " ++ String.fromFloat phase)
-            , max = 2.0
+            , max = 30.0
             , min = 0.0
             , onChange = msgPhase
-            , step = Just 0.1
+            , step = Just 1.0
             , thumb = Input.defaultThumb
             , value = phase
             }
@@ -332,7 +332,7 @@ controler msgAmplitude msgPhase msgFrequency colorLabel fontColor bgColor amplit
             ]
             { label = Input.labelAbove [] (Element.text <| "Frequency: " ++ String.fromFloat frequency)
             , max = 30.0
-            , min = 10.0
+            , min = 3.0
             , onChange = msgFrequency
             , step = Just 1.0
             , thumb = Input.defaultThumb
@@ -378,9 +378,9 @@ fragmentShader =
     uniform float time;
     void main () {
       vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);
-      float r = 0.01 / abs(0.5 + amplitude.x * sin((atan(p.y, p.x) + (time + phase.x) * 0.5) * frequency.x) * 0.01 - length(p));
-      float g = 0.01 / abs(0.5 + amplitude.y * sin((atan(p.y, p.x) + (time + phase.y) * 0.5) * frequency.y) * 0.01 - length(p));
-      float b = 0.01 / abs(0.5 + amplitude.z * sin((atan(p.y, p.x) + (time + phase.z) * 0.5) * frequency.z) * 0.01 - length(p));
+      float r = 0.01 / abs(0.5 + amplitude.x * sin((atan(p.y, p.x) + (time + phase.x) * 0.1) * frequency.x) * 0.01 - length(p));
+      float g = 0.01 / abs(0.5 + amplitude.y * sin((atan(p.y, p.x) + (time + phase.y) * 0.1) * frequency.y) * 0.01 - length(p));
+      float b = 0.01 / abs(0.5 + amplitude.z * sin((atan(p.y, p.x) + (time + phase.z) * 0.1) * frequency.z) * 0.01 - length(p));
       gl_FragColor = vec4(vec3(r, g, b), 1.0);
     }
   |]
