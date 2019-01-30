@@ -210,6 +210,7 @@ controler msgMajorRadius msgSmallRadius msgDivTheta msgDivPhi model =
   Element.row
     [ Element.padding 20
     , Element.spacing 10
+    , Element.htmlAttribute (Attributes.style "margin" "auto")
     ]
     [ Element.el
         [ Element.height Element.fill
