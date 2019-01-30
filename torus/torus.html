@@ -13627,9 +13627,9 @@ var author$project$Main$controler = F5(
 				]));
 	});
 var author$project$Main$fragmentShader = {
-	src: '\n    precision mediump float;\n    varying vec4 vcolor;\n    void main (void) {\n      gl_FragColor = vcolor;\n    }\n  ',
+	src: '\n    precision mediump float;\n\n    uniform mat4 invMatrix;\n    uniform vec3 lightDirection;\n    uniform vec3 eyeDirection;\n    varying vec4 vColor;\n    varying vec3 vNormal;\n\n    void main (void) {\n      vec3 invLight = normalize(invMatrix * vec4(lightDirection, 0.0)).xyz;\n      vec3 invEye = normalize(invMatrix * vec4(eyeDirection, 0.0)).xyz;\n      vec3 halfLE = normalize(invLight + invEye);\n      float diffuse = clamp(dot(vNormal, invLight), 0.0, 1.0);\n      float specular = pow(clamp(dot(vNormal, halfLE), 0.0, 1.0), 50.0);\n      vec4 destColor = vColor * vec4(vec3(diffuse), 1.0) + vec4(vec3(specular), 1.0) + vec4(0.1, 0.1, 0.1, 1.0);\n      gl_FragColor = destColor;\n    }\n  ',
 	attributes: {},
-	uniforms: {}
+	uniforms: {eyeDirection: 'bB', invMatrix: 'bJ', lightDirection: 'bL'}
 };
 var elm$core$Basics$sin = _Basics_sin;
 var author$project$Main$getB = function (phi) {
@@ -13903,9 +13903,9 @@ var author$project$Main$uniforms = function (model) {
 	};
 };
 var author$project$Main$vertexShader = {
-	src: '\n    attribute vec3 position;\n    attribute vec3 color;\n    attribute vec3 normal;\n    uniform mat4 mvpMatrix;\n    uniform mat4 invMatrix;\n    uniform vec3 lightDirection;\n    uniform vec3 eyeDirection;\n    varying vec4 vcolor;\n    void main (void) {\n      vec3 invLight = normalize(invMatrix * vec4(lightDirection, 0.0)).xyz;\n      vec3 invEye = normalize(invMatrix * vec4(eyeDirection, 0.0)).xyz;\n      vec3 halfLE = normalize(invLight + invEye);\n      float diffuse = clamp(dot(normal, invLight), 0.0, 1.0);\n      float specular = pow(clamp(dot(normal, halfLE), 0.0, 1.0), 50.0);\n      vcolor = vec4(color, 1.0) * vec4(vec3(diffuse), 1.0) + vec4(vec3(specular), 1.0) + vec4(0.1, 0.1, 0.1, 1.0);\n      gl_Position = mvpMatrix * vec4(position, 1.0);\n    }\n  ',
+	src: '\n    attribute vec3 position;\n    attribute vec3 color;\n    attribute vec3 normal;\n    uniform mat4 mvpMatrix;\n    varying vec4 vColor;\n    varying vec3 vNormal;\n\n    void main (void) {\n      vColor = vec4(color, 1.0);\n      vNormal = normal;\n      gl_Position = mvpMatrix * vec4(position, 1.0);\n    }\n  ',
 	attributes: {color: 'bw', normal: 'b3', position: 'cc'},
-	uniforms: {eyeDirection: 'bB', invMatrix: 'bJ', lightDirection: 'bL', mvpMatrix: 'b1'}
+	uniforms: {mvpMatrix: 'b1'}
 };
 var elm$html$Html$Attributes$height = function (n) {
 	return A2(

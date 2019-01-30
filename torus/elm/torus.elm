@@ -491,34 +491,41 @@ footer model =
 
 
 -- SHADERS
-vertexShader : Shader Vertex Uniforms { vcolor : Vec4}
+vertexShader : Shader Vertex Uniforms { vColor : Vec4, vNormal : Vec3}
 vertexShader =
   [glsl|
     attribute vec3 position;
     attribute vec3 color;
     attribute vec3 normal;
     uniform mat4 mvpMatrix;
-    uniform mat4 invMatrix;
-    uniform vec3 lightDirection;
-    uniform vec3 eyeDirection;
-    varying vec4 vcolor;
+    varying vec4 vColor;
+    varying vec3 vNormal;
+
     void main (void) {
-      vec3 invLight = normalize(invMatrix * vec4(lightDirection, 0.0)).xyz;
-      vec3 invEye = normalize(invMatrix * vec4(eyeDirection, 0.0)).xyz;
-      vec3 halfLE = normalize(invLight + invEye);
-      float diffuse = clamp(dot(normal, invLight), 0.0, 1.0);
-      float specular = pow(clamp(dot(normal, halfLE), 0.0, 1.0), 50.0);
-      vcolor = vec4(color, 1.0) * vec4(vec3(diffuse), 1.0) + vec4(vec3(specular), 1.0) + vec4(0.1, 0.1, 0.1, 1.0);
+      vColor = vec4(color, 1.0);
+      vNormal = normal;
       gl_Position = mvpMatrix * vec4(position, 1.0);
     }
   |]
 
-fragmentShader : Shader {} Uniforms { vcolor : Vec4 }
+fragmentShader : Shader {} Uniforms { vColor : Vec4, vNormal : Vec3 }
 fragmentShader =
   [glsl|
     precision mediump float;
-    varying vec4 vcolor;
+
+    uniform mat4 invMatrix;
+    uniform vec3 lightDirection;
+    uniform vec3 eyeDirection;
+    varying vec4 vColor;
+    varying vec3 vNormal;
+
     void main (void) {
-      gl_FragColor = vcolor;
+      vec3 invLight = normalize(invMatrix * vec4(lightDirection, 0.0)).xyz;
+      vec3 invEye = normalize(invMatrix * vec4(eyeDirection, 0.0)).xyz;
+      vec3 halfLE = normalize(invLight + invEye);
+      float diffuse = clamp(dot(vNormal, invLight), 0.0, 1.0);
+      float specular = pow(clamp(dot(vNormal, halfLE), 0.0, 1.0), 50.0);
+      vec4 destColor = vColor * vec4(vec3(diffuse), 1.0) + vec4(vec3(specular), 1.0) + vec4(0.1, 0.1, 0.1, 1.0);
+      gl_FragColor = destColor;
     }
   |]
