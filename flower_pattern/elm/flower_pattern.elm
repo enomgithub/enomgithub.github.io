@@ -99,28 +99,33 @@ update msg model =
       ( { model | amplitude = Vec3.setZ ampB model.amplitude }, Cmd.none )
 
     PhaseRChanged phaseR ->
-      ( { model | phase = Vec3.setX phaseR model.phase }, Cmd.none)
+      ( { model | phase = Vec3.setX phaseR model.phase }, Cmd.none )
 
     PhaseGChanged phaseG ->
-      ( { model | phase = Vec3.setY phaseG model.phase }, Cmd.none)
+      ( { model | phase = Vec3.setY phaseG model.phase }, Cmd.none )
 
     PhaseBChanged phaseB ->
-      ( { model | phase = Vec3.setZ phaseB model.phase }, Cmd.none)
+      ( { model | phase = Vec3.setZ phaseB model.phase }, Cmd.none )
 
     FrequencyRChanged frequencyR ->
-      ( { model | frequency = Vec3.setX frequencyR model.frequency }, Cmd.none)
+      ( { model | frequency = Vec3.setX frequencyR model.frequency }, Cmd.none )
 
     FrequencyGChanged frequencyG ->
-      ( { model | frequency = Vec3.setY frequencyG model.frequency }, Cmd.none)
+      ( { model | frequency = Vec3.setY frequencyG model.frequency }, Cmd.none )
 
     FrequencyBChanged frequencyB ->
-      ( { model | frequency = Vec3.setZ frequencyB model.frequency }, Cmd.none)
+      ( { model | frequency = Vec3.setZ frequencyB model.frequency }, Cmd.none )
 
     SetWindowSize width height ->
       ( { model | width = width, height = height }, Cmd.none )
 
     GetViewport viewport ->
-      ( { model | width = round viewport.viewport.width, height = round viewport.viewport.height }, Cmd.none )
+      ( { model
+            | width = round viewport.viewport.width
+            , height = round viewport.viewport.height
+        }
+        , Cmd.none
+      )
 
 type Msg
   = Delta Float
@@ -356,7 +361,8 @@ footer model =
         [ Element.centerY
         , Font.size 32
         ]
-        { url = model.footer.url, label = Element.text model.footer.label} )
+        { url = model.footer.url, label = Element.text model.footer.label}
+    )
 
 vertexShader : Shader Vertex Uniforms {}
 vertexShader =
