@@ -39,10 +39,12 @@ init _ =
         { height = 512
         , width = 512
         }
-    , majorRadius = 10
-    , smallRadius = 3
-    , divTheta = 12
-    , divPhi = 12
+    , torus =
+        { majorRadius = 10
+        , minorRadius = 3
+        , majorCircleSegment = 12
+        , minorCircleSegment = 12
+        }
     , windowResolution =
         { height = 600
         , width = 600
@@ -56,10 +58,7 @@ type alias Model =
   { header : String
   , footer : Footer
   , webglResolution : Resolution
-  , majorRadius : Float
-  , smallRadius : Float
-  , divTheta : Int
-  , divPhi : Int
+  , torus : Torus
   , windowResolution : Resolution
   , time : Float
   }
@@ -76,9 +75,9 @@ type alias Resolution =
 
 type alias Torus =
   { majorRadius : Float
-  , smallRadius : Float
-  , divTheta : Int
-  , divPhi : Int
+  , minorRadius : Float
+  , majorCircleSegment : Int
+  , minorCircleSegment : Int
   }
 
 
@@ -116,16 +115,52 @@ update msg model =
       )
 
     MajorRadiusChanged radius ->
-      ( { model | majorRadius = radius }, Cmd.none )
+      ( { model |
+            torus =
+              { majorRadius = radius
+              , minorRadius = model.torus.minorRadius
+              , majorCircleSegment = model.torus.majorCircleSegment
+              , minorCircleSegment = model.torus.minorCircleSegment
+              }
+        }
+        , Cmd.none
+        )
 
-    SmallRadiusChanged radius ->
-      ( { model | smallRadius = radius }, Cmd.none )
+    MinorRadiusChanged radius ->
+      ( { model |
+            torus =
+              { majorRadius = model.torus.majorRadius
+              , minorRadius = radius
+              , majorCircleSegment = model.torus.majorCircleSegment
+              , minorCircleSegment = model.torus.minorCircleSegment
+              }
+        }
+        , Cmd.none
+        )
 
-    DivThetaChanged divTheta ->
-      ( { model | divTheta = round divTheta }, Cmd.none )
+    MajorCircleSegmentChanged segment ->
+      ( { model |
+            torus =
+              { majorRadius = model.torus.majorRadius
+              , minorRadius = model.torus.minorRadius
+              , majorCircleSegment = segment |> round
+              , minorCircleSegment = model.torus.minorCircleSegment
+              }
+        }
+        , Cmd.none
+        )
 
-    DivPhiChanged divPhi ->
-      ( { model | divPhi = round divPhi }, Cmd.none )
+    MinorCircleSegmentChanged segment ->
+      ( { model |
+            torus =
+              { majorRadius = model.torus.majorRadius
+              , minorRadius = model.torus.minorRadius
+              , majorCircleSegment = model.torus.majorCircleSegment
+              , minorCircleSegment = segment |> round
+              }
+        }
+        , Cmd.none
+        )
 
     Delta dt ->
       ( { model | time = (model.time + dt / 10) |> round |> modBy 360 |> toFloat }, Cmd.none )
@@ -134,9 +169,9 @@ type Msg
   = GetViewport Dom.Viewport
   | SetWindowSize Int Int
   | MajorRadiusChanged Float
-  | SmallRadiusChanged Float
-  | DivThetaChanged Float
-  | DivPhiChanged Float
+  | MinorRadiusChanged Float
+  | MajorCircleSegmentChanged Float
+  | MinorCircleSegmentChanged Float
   | Delta Float
 
 
@@ -167,7 +202,7 @@ header : Model -> Element.Element Msg
 header model =
   Element.el
     [ Element.height <| Element.px <| 80
-    , Element.width Element.fill
+    , Element.width <| Element.px <| model.windowResolution.width
     , Element.paddingEach { top = 0, right = 0, bottom = 0, left = 10 }
     , Font.size 32
     , Font.color <| Element.rgb255 251 250 245
@@ -181,7 +216,7 @@ header model =
 contents : Model -> Element.Element Msg
 contents model =
   Element.column
-    [ Element.paddingEach { top =0, right = 0, bottom = 80, left = 0 }
+    [ Element.paddingEach { top = 0, right = 0, bottom = 80, left = 0 }
     , Element.htmlAttribute (Attributes.style "margin" "auto")
     ]
     [ Element.html
@@ -193,20 +228,20 @@ contents model =
             [ WebGL.entity
                 vertexShader
                 fragmentShader
-                ( torus model )
+                ( torus model.torus )
                 ( uniforms model )
             ]
         )
     , controler
         MajorRadiusChanged
-        SmallRadiusChanged
-        DivThetaChanged
-        DivPhiChanged
-        model
+        MinorRadiusChanged
+        MajorCircleSegmentChanged
+        MinorCircleSegmentChanged
+        model.torus
     ]
 
-controler : (Float -> Msg) -> (Float -> Msg) -> (Float -> Msg) -> (Float -> Msg) -> Model -> Element.Element Msg
-controler msgMajorRadius msgSmallRadius msgDivTheta msgDivPhi model =
+controler : (Float -> Msg) -> (Float -> Msg) -> (Float -> Msg) -> (Float -> Msg) -> Torus -> Element.Element Msg
+controler msgMajorRadius msgMinorRadius msgMajorCircleSegment msgMinorCircleSegment torusModel =
   Element.row
     [ Element.padding 20
     , Element.spacing 10
@@ -226,78 +261,93 @@ controler msgMajorRadius msgSmallRadius msgDivTheta msgDivPhi model =
             ( Element.text "Parameter" )
         )
     , Element.column
-        [ Element.spacing 20
+        [ Element.spacing 10
         , Element.centerY
         ]
-        [ Input.slider
-            [ Element.width Element.fill
-            , Element.height <| Element.px <| 2
-            , Background.color <| Element.rgb255 192 192 192
-            , Border.rounded 2
-            ]
-            { label =
-                Input.labelAbove
-                  []
-                  (Element.text <| "Major Radius: " ++ String.fromFloat model.majorRadius)
-            , max = 14.0
-            , min = 5.0
-            , onChange = msgMajorRadius
-            , step = Just 1.0
-            , thumb = Input.defaultThumb
-            , value = model.majorRadius
+        [ parameterUI
+            { path = "img/major_radius.png"
+            , description = "Major Radius"
             }
-        , Input.slider
-            [ Element.width Element.fill
-            , Element.height <| Element.px <| 2
-            , Background.color <| Element.rgb255 192 192 192
-            , Border.rounded 2
-            ]
-            { label =
-                Input.labelAbove
-                  []
-                  (Element.text <| "Small Radius: " ++ String.fromFloat model.smallRadius)
-            , max = 4.0
+            { max = 12.0
+            , min = 8.0
+            , step = Just 1.0
+            }
+            msgMajorRadius
+            torusModel.majorRadius
+        , parameterUI
+            { path = "img/minor_radius.png"
+            , description = "Minor Radius"
+            }
+            { max = 7.0
             , min = 1.0
-            , onChange = msgSmallRadius
             , step = Just 1.0
-            , thumb = Input.defaultThumb
-            , value = model.smallRadius
             }
-        , Input.slider
-            [ Element.width Element.fill
-            , Element.height <| Element.px <| 2
-            , Background.color <| Element.rgb255 192 192 192
-            , Border.rounded 2
-            ]
-            { label =
-                Input.labelAbove
-                  []
-                  (Element.text <| "Division of Theta: " ++ String.fromInt model.divTheta)
-            , max = 60.0
+            msgMinorRadius
+            torusModel.minorRadius
+        , parameterUI
+            { path = "img/major_circle_segment.png"
+            , description = "Major Circle Segment"
+            }
+            { max = 60.0
             , min = 3.0
-            , onChange = msgDivTheta
             , step = Just 1.0
-            , thumb = Input.defaultThumb
-            , value = toFloat model.divTheta
             }
-        , Input.slider
-            [ Element.width Element.fill
-            , Element.height <| Element.px <| 2
-            , Background.color <| Element.rgb255 192 192 192
-            , Border.rounded 2
-            ]
-            { label =
-                Input.labelAbove
-                  []
-                  (Element.text <| "Division of Phi: " ++ String.fromInt model.divPhi)
-            , max = 60.0
+            msgMajorCircleSegment
+            (toFloat torusModel.majorCircleSegment)
+        , parameterUI
+            { path = "img/minor_circle_segment.png"
+            , description = "Minor Circle Segment"
+            }
+            { max = 60.0
             , min = 3.0
-            , onChange = msgDivPhi
             , step = Just 1.0
-            , thumb = Input.defaultThumb
-            , value = toFloat model.divPhi
             }
+            msgMinorCircleSegment
+            (toFloat torusModel.minorCircleSegment)
         ]
+    ]
+
+type alias ImageConfig =
+  { path : String
+  , description : String
+  }
+
+type alias SliderConfig =
+  { max : Float
+  , min : Float
+  , step : Maybe Float
+  }
+
+parameterUI : ImageConfig -> SliderConfig -> ( Float -> Msg ) -> Float -> Element.Element Msg
+parameterUI imageConfig sliderConfig msg modelParameter =
+  Element.row
+    []
+    [ Element.image
+        [ Element.height <| Element.px <| 64
+        , Element.width <| Element.px <| 64
+        , Element.htmlAttribute (Attributes.style "image-rendering" "pixelated")
+        ]
+        { src = imageConfig.path
+        , description = imageConfig.description
+        }
+    , Input.slider
+        [ Element.width <| Element.px <| 200
+        , Element.height <| Element.px <| 5
+        , Background.color <| Element.rgb255 192 192 192
+        , Border.rounded 5
+        , Element.alignBottom
+        ]
+        { label =
+            Input.labelAbove
+              [ Element.alignRight ]
+              (Element.text <| String.fromFloat modelParameter)
+        , max = sliderConfig.max
+        , min = sliderConfig.min
+        , onChange = msg
+        , step = sliderConfig.step
+        , thumb = Input.defaultThumb
+        , value = modelParameter
+        }
     ]
 
 type alias Vertex =
@@ -314,16 +364,16 @@ vertex position color normal =
   }
 
 getX : Float -> Float -> Float -> Float -> Float
-getX majorRadius smallRadius theta phi =
-  majorRadius * (cos theta) + smallRadius * (cos theta) * (cos phi)
+getX majorRadius minorRadius theta phi =
+  majorRadius * (cos theta) + minorRadius * (cos theta) * (cos phi)
 
 getY : Float -> Float -> Float -> Float -> Float
-getY majorRadius smallRadius theta phi =
-  majorRadius * (sin theta) + smallRadius * (sin theta) * (cos phi)
+getY majorRadius minorRadius theta phi =
+  majorRadius * (sin theta) + minorRadius * (sin theta) * (cos phi)
 
 getZ : Float -> Float -> Float
-getZ smallRadius phi =
-  smallRadius * (sin phi)
+getZ minorRadius phi =
+  minorRadius * (sin phi)
 
 getR : Float -> Float -> Float
 getR theta phi =
@@ -357,76 +407,76 @@ normalize x y z =
     vec3 (x / norm) (y / norm) (z / norm)
 
 getRadian : Int -> Int -> Float
-getRadian index division =
-  if index == division then
+getRadian index segment =
+  if index == segment then
       0.0
   else
-      360.0 * (toFloat index) / (toFloat division) |> degrees
+      360.0 * (toFloat index) / (toFloat segment) |> degrees
 
-face : Model -> (Int, Int) -> List ( Vertex, Vertex, Vertex )
-face model ( indexTheta, indexPhi ) =
+face : Torus -> (Int, Int) -> List ( Vertex, Vertex, Vertex )
+face torusModel ( indexTheta, indexPhi ) =
   let
-    theta = getRadian indexTheta model.divTheta
-    phi = getRadian indexPhi model.divPhi
-    thetaNext = getRadian (indexTheta + 1) model.divTheta
-    phiNext = getRadian (indexPhi + 1) model.divPhi
+    theta = getRadian indexTheta torusModel.majorCircleSegment
+    phi = getRadian indexPhi torusModel.minorCircleSegment
+    thetaNext = getRadian (indexTheta + 1) torusModel.majorCircleSegment
+    phiNext = getRadian (indexPhi + 1) torusModel.minorCircleSegment
   in
     [ ( vertex
           (vec3
-            (getX model.majorRadius model.smallRadius theta phiNext)
-            (getY model.majorRadius model.smallRadius theta phiNext)
-            (getZ model.smallRadius phiNext)
+            (getX torusModel.majorRadius torusModel.minorRadius theta phiNext)
+            (getY torusModel.majorRadius torusModel.minorRadius theta phiNext)
+            (getZ torusModel.minorRadius phiNext)
           )
           (vec3 (getR theta phiNext) (getG theta phiNext) (getB phiNext))
           (normalize (getNormX theta phiNext) (getNormY theta phiNext) (getNormZ phiNext))
       , vertex
           (vec3
-            (getX model.majorRadius model.smallRadius theta phi)
-            (getY model.majorRadius model.smallRadius theta phi)
-            (getZ model.smallRadius phi)
+            (getX torusModel.majorRadius torusModel.minorRadius theta phi)
+            (getY torusModel.majorRadius torusModel.minorRadius theta phi)
+            (getZ torusModel.minorRadius phi)
           )
           (vec3 (getR theta phi) (getG theta phi) (getB phi))
           (normalize (getNormX theta phi) (getNormY theta phi) (getNormZ phi))
       , vertex
           (vec3
-            (getX model.majorRadius model.smallRadius thetaNext phi)
-            (getY model.majorRadius model.smallRadius thetaNext phi)
-            (getZ model.smallRadius phi)
+            (getX torusModel.majorRadius torusModel.minorRadius thetaNext phi)
+            (getY torusModel.majorRadius torusModel.minorRadius thetaNext phi)
+            (getZ torusModel.minorRadius phi)
           )
           (vec3 (getR thetaNext phi) (getG thetaNext phi) (getB phi))
           (normalize (getNormX thetaNext phi) (getNormY thetaNext phi) (getNormZ phi))
       )
     , ( vertex
           (vec3
-            (getX model.majorRadius model.smallRadius theta phiNext)
-            (getY model.majorRadius model.smallRadius theta phiNext)
-            (getZ model.smallRadius phiNext)
+            (getX torusModel.majorRadius torusModel.minorRadius theta phiNext)
+            (getY torusModel.majorRadius torusModel.minorRadius theta phiNext)
+            (getZ torusModel.minorRadius phiNext)
           )
           (vec3 (getR theta phiNext) (getG theta phiNext) (getB phiNext))
           (normalize (getNormX theta phiNext) (getNormY theta phiNext) (getNormZ phiNext))
       , vertex
           (vec3
-            (getX model.majorRadius model.smallRadius thetaNext phi)
-            (getY model.majorRadius model.smallRadius thetaNext phi)
-            (getZ model.smallRadius phi)
+            (getX torusModel.majorRadius torusModel.minorRadius thetaNext phi)
+            (getY torusModel.majorRadius torusModel.minorRadius thetaNext phi)
+            (getZ torusModel.minorRadius phi)
           )
           (vec3 (getR thetaNext phi) (getG thetaNext phi) (getB phi))
           (normalize (getNormX thetaNext phi) (getNormY thetaNext phi) (getNormZ phi))
       , vertex
           (vec3
-            (getX model.majorRadius model.smallRadius thetaNext phiNext)
-            (getY model.majorRadius model.smallRadius thetaNext phiNext)
-            (getZ model.smallRadius phiNext)
+            (getX torusModel.majorRadius torusModel.minorRadius thetaNext phiNext)
+            (getY torusModel.majorRadius torusModel.minorRadius thetaNext phiNext)
+            (getZ torusModel.minorRadius phiNext)
           )
           (vec3 (getR thetaNext phiNext) (getG thetaNext phiNext) (getB phiNext))
           (normalize (getNormX thetaNext phiNext) (getNormY thetaNext phiNext) (getNormZ phiNext))
       )
     ]
 
-torus : Model -> Mesh Vertex
-torus model =
+torus : Torus -> Mesh Vertex
+torus torusModel =
   let
-    indexTheta = range 0 (model.divTheta - 1)
+    indexTheta = range 0 (torusModel.majorCircleSegment - 1)
 
     swap ( i, j ) = ( j, i )
 
@@ -437,11 +487,11 @@ torus model =
 
     indexPair =
       indexTheta
-        |> map (repeat model.divPhi)
+        |> map (repeat torusModel.minorCircleSegment)
         |> map pair
         |> concat
   in
-    map (face model) indexPair
+    map (face torusModel) indexPair
       |> concat
       |> WebGL.triangles
 
@@ -476,7 +526,7 @@ footer : Model -> Element.Element Msg
 footer model =
   Element.el
     [ Element.height <| Element.px <| 80
-    , Element.width Element.fill
+    , Element.width <| Element.px <| model.windowResolution.width
     , Element.paddingEach { top = 0, right = 0, bottom = 0, left = 10 }
     , Font.color <| Element.rgb255 251 250 245
     , Background.color <| Element.rgb255 0 110 84
