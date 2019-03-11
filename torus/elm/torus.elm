@@ -6,7 +6,7 @@ import Element.Background as Background
 import Element.Border as Border
 import Element.Font as Font
 import Element.Input as Input
-import Html exposing (Html)
+import Html
 import Html.Attributes as Attributes
 import List exposing (concat, indexedMap, map, range, repeat)
 import Math.Matrix4 as Mat4 exposing (Mat4)
