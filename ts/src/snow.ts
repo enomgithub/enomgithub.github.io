@@ -34,9 +34,9 @@ namespace Snow {
       this.ms = 16
       this.width = width
       this.height = height
-      let canvas = document.getElementById(id) as HTMLCanvasElement | null
+      const canvas = document.getElementById(id) as HTMLCanvasElement | null
       if (canvas !== null) {
-        let ctx = canvas.getContext("2d")
+        const ctx = canvas.getContext("2d")
         if (ctx !== null) {
           this.ctx = ctx
         } else {
@@ -50,16 +50,16 @@ namespace Snow {
     makeSnows(n: number, size: number, vx: number, vy: number, color: string): void {
       let snows: Array<Snow> = []
       for (let i = 0; i < n; i += 1) {
-        let x = (Math.random() * this.width) | 0
-        let y = (Math.random() * this.height) | 0
+        const x = (Math.random() * this.width) | 0
+        const y = (Math.random() * this.height) | 0
         snows.push(new Snow(x, y, vx, vy, size))
       }
       this.snows.push({"snows": snows, "color": color})
     }
     moveSnows(snows: Array<Snow>): void {
       for (let snow of snows) {
-        let x = ((Math.random() * snow.vx) + 1) | 0
-        let y = ((Math.random() * snow.vy) + 1) | 0
+        const x = ((Math.random() * snow.vx) + 1) | 0
+        const y = ((Math.random() * snow.vy) + 1) | 0
         snow.move(x, y)
         if (snow.x >= this.width) {
           snow.moveAbs(0, snow.y)
@@ -101,15 +101,15 @@ namespace Snow {
   }
 
   export function init(width: number, height: number, ratio: number, id: string): void {
-    let canvas = document.getElementById(id) as HTMLCanvasElement | null
+    const canvas = document.getElementById(id) as HTMLCanvasElement | null
     if (canvas !== null) {
       canvas.width = width
       canvas.height = height
     } else {
       throw new Error("Something wrong")
     }
-    let vx = 3 * ratio
-    let vy = 5 * ratio
+    const vx = 3 * ratio
+    const vy = 5 * ratio
     simulator = new Simulator(width, height, id)
     simulator.makeSnows(40, 4 * ratio, vx, vy, "rgb(160, 160, 160")
     simulator.makeSnows(30, 10 * ratio, vx, vy, "rgb(192, 192, 192")
