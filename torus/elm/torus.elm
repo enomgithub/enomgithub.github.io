@@ -221,8 +221,20 @@ contents model =
     ]
     [ Element.html
         ( WebGL.toHtml
-            [ Attributes.height model.webglResolution.height
-            , Attributes.width model.webglResolution.width
+            [ Attributes.height
+                ( if model.webglResolution.height > model.windowResolution.width
+                    then
+                      model.windowResolution.width
+                    else
+                      model.webglResolution.height
+                )
+            , Attributes.width
+                ( if model.webglResolution.width > model.windowResolution.width
+                    then
+                      model.windowResolution.width
+                    else
+                      model.webglResolution.width
+                )
             , Attributes.style "margin" "auto"
             ]
             [ WebGL.entity
