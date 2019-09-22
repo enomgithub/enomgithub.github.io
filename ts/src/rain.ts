@@ -1,3 +1,7 @@
+function range(start: number, end: number): Array<number> {
+  return ([...Array(end - start)].map((_, i) => (start + i)))
+}
+
 class Rain {
   x: number
   yTop: number
@@ -68,11 +72,11 @@ class Simulator {
   makeRains(n: number, size: number, color: string): void {
     let rains = []
     const velocity = size / 8
-    for (let i = 0; i < n; i += 1) {
+    for (let i of range(0, n)) {
       const x = Math.random() * this.width
       const y = Math.random() * this.height
       let xValiations = []
-      for (let j = 0; j < this.valiation; j += 1) {
+      for (let j of range(0, this.valiation)) {
         xValiations.push(Math.random() * this.width)
       }
       rains.push(new Rain(x, y, size, velocity, xValiations))
@@ -92,7 +96,7 @@ class Simulator {
     this.ctx.fillStyle = color
     for (let rain of rains) {
       this.ctx.beginPath()
-      for (let i = 10; i >= 0; i -= 1) {
+      for (let i of range(0, 10 + 1).reverse()) {
         const ratio = rain.size * i / 10
         this.ctx.arc(rain.x, rain.yTop + ratio, ratio / 2, 0, Math.PI * 2, true)
       }
