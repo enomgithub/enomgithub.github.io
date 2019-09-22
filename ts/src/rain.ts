@@ -1,3 +1,9 @@
+import * as promise from "es6-promise" 
+
+function range(start: number, end: number): Array<number> {
+  return ([...Array(end - start)].map((_, i) => (start + i)))
+}
+
 class Rain {
   x: number
   yTop: number
@@ -65,53 +71,67 @@ class Simulator {
     this.rains = []
     this.bgcolor = bgcolor
   }
-  makeRains(n: number, size: number, color: string): void {
-    let rains = []
-    const velocity = size / 8
-    for (let i = 0; i < n; i += 1) {
+  async makeRain(size: number, velocity: number): promise.Promise<Rain> {
       const x = Math.random() * this.width
       const y = Math.random() * this.height
-      let xValiations = []
-      for (let j = 0; j < this.valiation; j += 1) {
+      let xValiations: Array<number> = []
+      range(0, this.valiation).map((_) =>
         xValiations.push(Math.random() * this.width)
-      }
-      rains.push(new Rain(x, y, size, velocity, xValiations))
-    }
+      )
+      return new Rain(x, y, size, velocity, xValiations)
+  }
+  makeRains(n: number, size: number, color: string): void {
+    let rains: Array<Rain> = []
+    const velocity = size / 8
+    range(0, n).map((_) =>
+      this.makeRain(size, velocity)
+      .then((rain: Rain) => rains.push(rain), () => new Error("Did not make rain."))
+    )
     this.rains.push({"rains": rains, "color": color})
   }
-  moveRain(rains: Array<Rain>): void {
-    for (let rain of rains) {
-      rain.move(0, rain.velocity)
-      if (rain.yTop >= this.height) {
-        rain.moveAbs(rain.xValiations[rain.counter], 0)
-        rain.count(this.valiation)
-      }
+  async moveRain(rain: Rain): promise.Promise<string> {
+    rain.move(0, rain.velocity)
+    if (rain.yTop >= this.height) {
+      rain.moveAbs(rain.xValiations[rain.counter], -rain.size / 2)
+      rain.count(this.valiation)
     }
+    return "Finished moveRain."
+  }
+  moveRains(rains: Array<Rain>): void {
+    rains.map((rain) =>
+      this.moveRain(rain)
+      .then((message) => message, () => new Error("Did not move rain."))
+    )
+  }
+  async drawRain(rain: Rain): promise.Promise<string> {
+    const dx = (rain.size / 2) * Math.cos(Math.PI / 6)
+    const dy = (rain.size / 2) * Math.sin(Math.PI / 6)
+    this.ctx.beginPath()
+    this.ctx.moveTo(rain.x, rain.yTop)
+    this.ctx.lineTo(rain.x - dx, rain.yBottom - dy)
+    this.ctx.arc(rain.x, rain.yBottom, rain.size / 2, Math.PI * 7 /6, -Math.PI / 6, true)
+    this.ctx.moveTo(rain.x + dx, rain.yBottom - dy)
+    this.ctx.lineTo(rain.x, rain.yTop)
+    this.ctx.fill()
+
+    return "Finished drawRain."
   }
   drawRains(rains: Array<Rain>, color: string): void {
     this.ctx.fillStyle = color
-    for (let rain of rains) {
-      this.ctx.beginPath()
-      for (let i = 10; i >= 0; i -= 1) {
-        const ratio = rain.size * i / 10
-        this.ctx.arc(rain.x, rain.yTop + ratio, ratio / 2, 0, Math.PI * 2, true)
-      }
-      this.ctx.fill()
-    }
+    rains.map((rain) =>
+      this.drawRain(rain)
+      .then((message: string) => message, () => new Error("Did not draw rain."))
+    )
   }
   draw(): void {
     this.ctx.fillStyle = this.bgcolor
     this.ctx.fillRect(0, 0, this.width, this.height)
 
-    for (let rains of this.rains) {
-      this.drawRains(rains["rains"], rains["color"])
-    }
+    this.rains.map((rains) => this.drawRains(rains["rains"], rains["color"]))
   }
   loop(): void {
     this.draw()
-    for (let rains of this.rains) {
-      this.moveRain(rains["rains"])
-    }
+    this.rains.map((rains) => this.moveRains(rains["rains"]))
   }
 }
 
