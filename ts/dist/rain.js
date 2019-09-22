@@ -83,8 +83,8 @@ var Rain;
                 var rain = rains_2[_i];
                 this.ctx.beginPath();
                 for (var i = 10; i >= 0; i -= 1) {
-                    var ratio = rain.size * i / 10;
-                    this.ctx.arc(rain.x, rain.yTop + ratio, ratio / 2, 0, Math.PI * 2, true);
+                    var ratio_1 = rain.size * i / 10;
+                    this.ctx.arc(rain.x, rain.yTop + ratio_1, ratio_1 / 2, 0, Math.PI * 2, true);
                 }
                 this.ctx.fill();
             }
