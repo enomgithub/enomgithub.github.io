@@ -1,3 +1,7 @@
+import * as Snow from "./snow"
+import * as Rain from "./rain"
+import * as Cloud from "./cloud"
+
 const WIDTH = 960
 const CANVAS_ID = "weather"
 const SNOW_ID = "snow"
