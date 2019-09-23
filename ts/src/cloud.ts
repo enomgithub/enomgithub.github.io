@@ -1,3 +1,6 @@
+import * as utils from "./utils"
+import * as promise from "es6-promise" 
+
 let timer: number
 let simulator: Simulator
 
@@ -128,26 +131,31 @@ class Simulator {
 
     this.clouds.push(new Cloud(particles, v, 0, colorTop, colorBottom))
   }
-  moveCloud(cloud: Cloud): void {
-    for (let particle of cloud.particles) {
-      particle.move(cloud.vx, cloud.vy)
+  async moveParticle(particle: Particle, vx: number, vy: number): promise.Promise<string> {
+    particle.move(vx, vy)
 
-      if (particle.x >= this.width) {
-        particle.moveAbs(particle.x % this.width, particle.y)
-      }
-      if (particle.y >= this.height) {
-        particle.moveAbs(particle.x, particle.y % this.height)
-      }
+    if (particle.x >= this.width) {
+      particle.moveAbs(particle.x % this.width, particle.y)
     }
+    if (particle.y >= this.height) {
+      particle.moveAbs(particle.x, particle.y % this.height)
+    }
+    return "Finished moveParticle."
   }
-  drawCloud(cloud: Cloud): void {
+  async moveCloud(cloud: Cloud): promise.Promise<string> {
     for (let particle of cloud.particles) {
+      this.moveParticle(particle, cloud.vx, cloud.vy)
+      .then((message) => message, () => new Error("Did not move Particle."))
+    }
+    return "Finished moveCloud."
+  }
+  async drawParticle(particle: Particle, colorTop: string, colorBottom: string): promise.Promise<string> {
       const grad = this.ctx.createLinearGradient(
         particle.x, particle.y - particle.size / 2,
         particle.x, particle.y + particle.size / 2
       )
-      grad.addColorStop(0, cloud.colorTop)
-      grad.addColorStop(1, cloud.colorBottom)
+      grad.addColorStop(0, colorTop)
+      grad.addColorStop(1, colorBottom)
       this.ctx.fillStyle = grad
 
       this.ctx.beginPath()
@@ -156,7 +164,14 @@ class Simulator {
         0, Math.PI * 2, true
       )
       this.ctx.fill()
-    }
+
+    return "Finished drawParticle."
+  }
+  drawCloud(cloud: Cloud): void {
+    cloud.particles.map((particle) =>
+      this.drawParticle(particle, cloud.colorTop, cloud.colorBottom)
+      .then((message) => message, () => new Error("Did not draw particle."))
+    )
   }
   draw(): void {
     this.ctx.fillStyle = this.bgcolor
@@ -168,9 +183,10 @@ class Simulator {
   }
   loop(): void {
     this.draw()
-    for (let cloud of this.clouds) {
+    this.clouds.map((cloud) =>
       this.moveCloud(cloud)
-    }
+      .then((message) => message, () => new Error("Did not move cloud."))
+    )
   }
 }
 
@@ -195,10 +211,10 @@ export function init(
   const colorBottom = "rgba(133, 185, 203, 0.1"
   simulator = new Simulator(width, height, id, bgcolor)
 
-  for (let i = 0; i < layer; i += 1) {
+  for (let i of utils.range(0, layer)) {
     const quantity = (i + 1) * n
     const size = (36 - (layer - i) * 6) * ratio
-    for (let j = 0; j < layer - i; j += 1) {
+    for (let j of utils.range(0, layer - i)) {
       simulator.makeCloud(quantity, size, colorTop, colorBottom)
     }
   }
