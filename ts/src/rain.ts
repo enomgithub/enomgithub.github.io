@@ -1,8 +1,5 @@
+import * as utils from "./utils"
 import * as promise from "es6-promise" 
-
-function range(start: number, end: number): Array<number> {
-  return ([...Array(end - start)].map((_, i) => (start + i)))
-}
 
 class Rain {
   x: number
@@ -75,7 +72,7 @@ class Simulator {
       const x = Math.random() * this.width
       const y = Math.random() * this.height
       let xValiations: Array<number> = []
-      range(0, this.valiation).map((_) =>
+      utils.range(0, this.valiation).map((_) =>
         xValiations.push(Math.random() * this.width)
       )
       return new Rain(x, y, size, velocity, xValiations)
@@ -83,7 +80,7 @@ class Simulator {
   makeRains(n: number, size: number, color: string): void {
     let rains: Array<Rain> = []
     const velocity = size / 8
-    range(0, n).map((_) =>
+    utils.range(0, n).map((_) =>
       this.makeRain(size, velocity)
       .then((rain: Rain) => rains.push(rain), () => new Error("Did not make rain."))
     )
