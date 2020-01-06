@@ -7,9 +7,13 @@
   </head>
 
   <body style="margin: 0px; overflow: hidden">
+    <a-assets>
+      <a-asset-item id="nenga-obj" src="./static/model/nenga_2020.obj"></a-asset-item>
+      <a-asset-item id="nenga-mtl" src="./static/model/nenga_2020.mtl"></a-asset-item>
+    </a-assets>
     <a-scene embedded arjs="debugUIEnabled:false" vr-mode-ui="enabled: false">
       <a-marker type="pattern" url="pattern-ar_nenga_2020.patt">
-        <a-box position="0 0.5 0" width="0.5" height="0.5" depth="0.5" material="color: yellow"></a-box>
+        <a-entity obj-model="obj: #nenga-obj; mtl: #nenga-mtl"></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
     </a-scene>
