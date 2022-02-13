@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC } from 'https://esm.sh/react'
 
 export default function App({ Page, pageProps }: { Page: FC, pageProps: Record<string, unknown> }) {
   return (

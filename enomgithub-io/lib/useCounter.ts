@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'https://esm.sh/react'
 
 export default function useCounter(): [number, boolean, () => void, () => void] {
   const [count, setCount] = useState(0)

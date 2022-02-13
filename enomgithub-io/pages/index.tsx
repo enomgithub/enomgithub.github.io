@@ -1,7 +1,7 @@
-import { useDeno } from 'aleph/react'
-import React from 'react'
-import Logo from '~/components/logo.tsx'
-import useCounter from '~/lib/useCounter.ts'
+import React from 'https://esm.sh/react'
+import { useDeno } from 'https://deno.land/x/aleph@v0.3.0-beta.19/framework/react/mod.ts'
+import Logo from '../components/logo.tsx'
+import useCounter from '../lib/useCounter.ts'
 
 export default function Home() {
   const [count, isSyncing, increase, decrease] = useCounter()
