@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -12,5 +11,13 @@
     "jsx": "react"
   },
   "lint": {},
-  "format": {}
+  "format": {
+    "files": {
+      "exclude": [
+        ".aleph",
+        ".vscode",
+        "dist"
+      ]
+    }
+  }
 }
