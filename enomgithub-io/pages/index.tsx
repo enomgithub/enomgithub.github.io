@@ -1,12 +1,12 @@
-import React from 'https://esm.sh/react@17.0.2'
-import { useDeno } from 'https://deno.land/x/aleph@v0.3.0-beta.19/framework/react/mod.ts'
-// import Logo from '../components/logo.tsx'
-import Navi from '../components/navi.tsx'
-import useCounter from '../lib/useCounter.ts'
+import React from "https://esm.sh/react@17.0.2";
+// import { useDeno } from "https://deno.land/x/aleph@v0.3.0-beta.19/framework/react/mod.ts";
+import Navi from "../components/navi.tsx";
+// import useCounter from "../lib/useCounter.ts";
+import "../css/green.css";
 
 export default function Home() {
-  const [count, isSyncing, increase, decrease] = useCounter()
-  const version = useDeno(() => Deno.version.deno)
+  // const [count, isSyncing, increase, decrease] = useCounter();
+  // const version = useDeno(() => Deno.version.deno);
 
   return (
     // <div className="page">
@@ -38,6 +38,8 @@ export default function Home() {
     //   </div>
     //   <p className="copyinfo">Built by Aleph.js in Deno {version}</p>
     // </div>
-    <Navi />
-  )
+    <div>
+      <Navi />
+    </div>
+  );
 }
